@@ -148,10 +148,7 @@ async function dropClaw() {
 
 function showView(entering) {
   stopHolding();
-  parkView.hidden = entering;
-  clawView.hidden = !entering;
-  location.hash = entering ? "claw-machine" : "park";
-  (entering ? slider : document.querySelector("#enter-claw-machine")).focus();
+  ParkNavigation.show(entering ? "claw-machine" : "park");
 }
 
 document.querySelector("#enter-claw-machine").addEventListener("click", () => showView(true));
@@ -183,6 +180,7 @@ resetButton.addEventListener("click", () => {
 });
 window.addEventListener("blur", stopHolding);
 document.addEventListener("visibilitychange", stopHolding);
+document.addEventListener("park-view-change", stopHolding);
 window.addEventListener("keydown", event => {
   if (clawView.hidden || event.target === slider || event.target instanceof HTMLButtonElement) return;
   if (event.key === "ArrowLeft" || event.key === "ArrowRight") {

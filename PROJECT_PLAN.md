@@ -1,5 +1,9 @@
 # 目的：先做一座月月和哥哥能在同一网页里轮流操作的 PlayTogether 游乐园，并用零依赖网页验证第一项抓娃娃小游戏。
 
+## 2026-10-04 月亮秋千当前入口
+
+月月已确认双人并排、轮流择时推一把、攒满月光与慢慢摇；本次以 `SWING_PLAN.md` 为有效计划。秋千在原游乐园第二张卡片进入，也可 `#swing` 直达；`swing-rules.js`负责节奏／进度，`swing-game.js`负责界面与动画生命周期，`swing-storage.js`负责独立浏览器存档，`swing.css`与`assets/moon-garden.png`负责当前水彩场景。`park-navigation.js`统一三个视图及hash；抓娃娃规则和收藏不变。整体风格统一属于之后的任务，下面旧“秋千占位”仅为历史第一版状态。
+
 ## 2026-10-04 抓娃娃升级入口
 
 月月授权的自由对准、夹起摇晃与滑落、出口收藏及水彩贴纸美化，以 `CLAW_UPGRADE_PLAN.md` 为本次有效计划。原第一版与历史文字冒险正文完整保留；秋千待抓娃娃试玩后单独展开。当前实现职责：`claw-rules.js` 为抓取与落点规则，`claw-animation.js` 为可暂停的演出，`claw-storage.js` 为浏览器存档，`claw-machine.js` 为操作与轮次，`index.html`／`styles.css` 为界面，`assets/` 为三件生成水彩素材及提示词记录。

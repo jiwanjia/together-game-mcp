@@ -1,0 +1,53 @@
+.swing-card-art { background: url('assets/moon-garden.png') center / cover, #e4dbea; }
+.swing-card-art::before, .swing-card-art .swing-seat { display: none; }
+.swing-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(270px, .75fr); gap: 26px; align-items: start; }
+.swing-main { overflow: hidden; border: 1px solid #dbc4c5; border-radius: 24px 24px 18px 18px; background: #fcf6ed; box-shadow: 0 18px 40px #a87c891a; }
+.swing-scene { position: relative; aspect-ratio: 1000 / 650; overflow: hidden; background: url('assets/moon-garden.png') center / 100% 100%, #e8dfe9; }
+.swing-scene svg { display: block; width: 100%; height: 100%; }
+.swing-caption { position: absolute; bottom: 17px; left: 50%; transform: translateX(-50%) rotate(-1deg); white-space: nowrap; padding: 7px 15px; color: #806c83; background: #fff8eeee; border: 1px dashed #cfb8c5; border-radius: 5px; font-size: .68rem; letter-spacing: .08em; }
+.swing-controls { padding: 22px 26px 16px; border-top: 1px dashed #dcc4c8; }
+.swing-timing { text-align: center; color: #8c7485; font-size: .8rem; }
+#swing-timing-label { display: block; min-height: 1.8em; }
+#swing-timing-label[data-ready='true'] { color: #657e66; font-weight: 700; }
+.swing-timing-track { position: relative; height: 16px; margin: 9px auto 22px; max-width: 440px; border: 1px solid #d7c5ce; border-radius: 12px; background: #eee1e6; }
+.swing-timing-zone { position: absolute; inset: 0 34.7%; background: #bdd0b5; border-inline: 1px dashed #809979; }
+#swing-timing-dot { position: absolute; top: -4px; left: 50%; width: 22px; height: 22px; transform: translateX(-50%); border: 3px solid #fff9ef; border-radius: 50%; background: #b28caa; box-shadow: 0 2px 4px #71506c44; }
+.swing-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.swing-push, .swing-gentle { min-height: 48px; padding: 12px 26px; border: 1px solid #c3a4b6; border-radius: 14px; box-shadow: 0 4px 0 #d2b8c6; font-weight: 700; }
+.swing-push { background: #e8d3e3; color: #765b79; }
+.swing-gentle { background: #fff5e4; color: #927b68; }
+.swing-push:active, .swing-gentle:active { transform: translateY(3px); box-shadow: 0 1px 0 #d2b8c6; }
+.swing-instructions { margin: 20px 0 0; color: #99818b; font-size: .72rem; line-height: 1.8; text-align: center; }
+.swing-journal { position: relative; padding: 28px 24px 24px; border: 1px solid #e0cdd0; border-radius: 12px 28px 14px 22px; background: linear-gradient(140deg, #fff9ed, #f8edf0); box-shadow: 5px 7px 0 #deccd52b; transform: rotate(1deg); text-align: center; }
+.swing-journal::before { position: absolute; content: ''; top: -9px; left: 36%; width: 28%; height: 20px; transform: rotate(-3deg); background: #d7b6c877; }
+.swing-journal .eyebrow { font: italic .72rem Georgia, serif; letter-spacing: .04em; }
+.swing-journal h2 { margin: 5px 0 22px; font: 1.25rem Georgia, "Noto Serif SC", serif; color: #81657b; }
+.swing-moon-meter { position: relative; width: 154px; height: 154px; margin: 15px auto; }
+.swing-moon-meter svg { width: 100%; height: 100%; }
+.moon-track, .moon-ring { fill: none; stroke-width: 4; }
+.moon-track { stroke: #e7d9e3; }
+.moon-ring { stroke: #b594b0; stroke-linecap: round; stroke-dasharray: 301.6; stroke-dashoffset: 301.6; transform: rotate(-90deg); transform-origin: 60px 60px; transition: stroke-dashoffset 500ms ease; }
+#swing-moon { position: absolute; bottom: 15px; left: 0; right: 0; color: #937889; font: 1rem Georgia, serif; }
+#swing-status { min-height: 6em; margin: 0; color: #826c79; text-align: left; font-size: .85rem; line-height: 1.85; }
+.swing-record { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 20px 0; padding-block: 18px; border-block: 1px dashed #dcc6d2; }
+.swing-record dt { color: #9c8592; font-size: .7rem; }
+.swing-record dd { margin: 8px 0 0; color: #81677d; font: 1.3rem Georgia, serif; }
+.swing-milestone { min-height: 3em; color: #9b8490; font-size: .72rem; line-height: 1.7; }
+#restart-swing { font-size: .75rem; }
+.swing-journal .save-status { margin: 12px 0 0; font-size: .64rem; }
+.swing-scene.is-running .swing-fireflies { animation: firefly-glow 4s ease-in-out infinite alternate; }
+.swing-scene.is-running .swing-petals { animation: petal-drift 6s ease-in-out infinite alternate; }
+@keyframes firefly-glow { from { opacity: .25; } to { opacity: .95; } }
+@keyframes petal-drift { from { transform: translate(-7px, -4px); } to { transform: translate(8px, 12px); } }
+@media (max-width: 900px) { .swing-layout { grid-template-columns: minmax(0, 1fr); } .swing-journal { width: min(500px, 100%); justify-self: center; } }
+@media (max-width: 680px) {
+  .swing-controls { padding: 18px 16px; }
+  .swing-caption { bottom: 10px; font-size: .56rem; padding: 5px 8px; }
+  .swing-push, .swing-gentle { padding: 12px 18px; font-size: .8rem; }
+  .swing-timing { font-size: .7rem; }
+  .swing-journal { padding: 24px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swing-scene.is-running .swing-fireflies, .swing-scene.is-running .swing-petals { animation: none; }
+  .moon-ring { transition: none; }
+}

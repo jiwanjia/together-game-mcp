@@ -13,6 +13,7 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23120919'/%3E%3Cpath d='M32 8l6.4 17.6L56 32l-17.6 6.4L32 56l-6.4-17.6L8 32l17.6-6.4z' fill='%23ffc96b'/%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="swing.css" />
   </head>
   <body>
     <div class="page-shell">
@@ -54,14 +55,15 @@
               </div>
             </article>
 
-            <article class="attraction-card attraction-card--soon" aria-disabled="true">
+            <article class="attraction-card attraction-card--active">
               <div class="card-art swing-card-art" aria-hidden="true">
                 <span class="swing-seat"></span>
               </div>
               <div class="card-copy">
-                <p class="card-number">02 · COMING SOON</p>
+                <p class="card-number">02 · NOW OPEN</p>
                 <h2>月亮秋千</h2>
-                <p>以后一起把秋千荡到月光里。</p>
+                <p>两个人轮流推一把，一起把秋千荡进月光里。</p>
+                <button id="enter-swing" class="primary-button" type="button">去荡秋千 <span aria-hidden="true">→</span></button>
               </div>
             </article>
 
@@ -194,12 +196,95 @@
             </aside>
           </div>
         </section>
+        <section id="swing-view" class="view swing-view" aria-labelledby="swing-title" hidden>
+          <div class="game-heading">
+            <button id="swing-back" class="text-button" type="button">← 返回游乐园</button>
+            <div><p class="eyebrow">Attraction 02 · Under the moon</p><h1 id="swing-title">月亮秋千</h1></div>
+            <div class="turn-badge"><span>这次谁推</span><strong id="swing-player">月月</strong></div>
+          </div>
+          <div class="swing-layout">
+            <div class="swing-main">
+              <div class="swing-scene" role="img" aria-label="月月和哥哥并排坐在大树下的双人秋千上">
+                <svg id="swing-art" viewBox="0 0 1000 650" aria-hidden="true">
+                  <ellipse id="swing-shadow" cx="500" cy="560" rx="96" ry="13" fill="#80718b" opacity=".12" />
+                  <g id="swing-petals" class="swing-petals" visibility="hidden" fill="#e4b2c0">
+                    <ellipse cx="240" cy="390" rx="7" ry="3" transform="rotate(25 240 390)" />
+                    <ellipse cx="720" cy="310" rx="5" ry="3" /><ellipse cx="660" cy="480" rx="7" ry="3" />
+                    <ellipse cx="330" cy="500" rx="6" ry="3" /><ellipse cx="580" cy="260" rx="5" ry="3" />
+                  </g>
+                  <g id="swing-rig" transform="translate(500 110)">
+                    <path d="M-76 0 L-76 340 M76 0 L76 340" stroke="#c99caa" stroke-width="5" fill="none" />
+                    <path d="M-85 8 Q-75 -5 -67 8 M67 8 Q75 -5 85 8" stroke="#dfb7c4" stroke-width="7" fill="none" />
+                    <g id="swing-stars" visibility="hidden" fill="#d9b878" stroke="#fff1c8" stroke-width="1.5">
+                      <path d="M-76 150 l4 9 10 1 -8 7 2 10 -8 -5 -9 5 2 -10 -7 -7 10 -1z" />
+                      <path d="M76 185 l4 9 10 1 -8 7 2 10 -8 -5 -9 5 2 -10 -7 -7 10 -1z" />
+                    </g>
+                    <g class="swing-person" transform="translate(-36 0)">
+                      <path d="M-16 327 L-17 364 M15 327 L20 364" stroke="#836a73" stroke-width="7" stroke-linecap="round" />
+                      <path d="M-26 289 Q-12 280 0 286 Q19 280 26 296 L22 337 L-22 337 Z" fill="#edc2cf" stroke="#b88e9f" stroke-width="2" />
+                      <path d="M-24 297 L-39 316 M24 297 L37 316" stroke="#eed5c2" stroke-width="8" stroke-linecap="round" />
+                      <ellipse cx="0" cy="265" rx="22" ry="25" fill="#f3dccc" stroke="#c8a193" stroke-width="1.5" />
+                      <path d="M-23 269 Q-29 233 0 237 Q28 232 24 270 L16 254 Q-3 258 -15 250 L-19 283 L-27 288 Z" fill="#886d77" />
+                      <path d="M-11 266 v2 M10 266 v2" stroke="#80606b" stroke-width="3" stroke-linecap="round" />
+                      <path d="M-4 276 Q0 280 4 276" stroke="#b1838a" stroke-width="2" fill="none" />
+                      <path d="M16 240 l12 -5 -3 10 7 8 -15 -1z" fill="#d9a1b6" />
+                    </g>
+                    <g class="swing-person" transform="translate(36 0)">
+                      <path d="M-16 327 L-20 364 M15 327 L18 364" stroke="#746b81" stroke-width="7" stroke-linecap="round" />
+                      <path d="M-26 292 Q0 278 26 294 L22 337 L-22 337 Z" fill="#c5bdd4" stroke="#958ba8" stroke-width="2" />
+                      <path d="M-24 298 L-37 316 M24 298 L39 316" stroke="#eed5c2" stroke-width="8" stroke-linecap="round" />
+                      <ellipse cx="0" cy="265" rx="22" ry="25" fill="#f3dccc" stroke="#c8a193" stroke-width="1.5" />
+                      <path d="M-22 261 Q-27 232 0 236 Q28 230 24 264 L15 249 -1 254 -15 248Z" fill="#756b7a" />
+                      <path d="M-11 266 v2 M10 266 v2" stroke="#80606b" stroke-width="3" stroke-linecap="round" />
+                      <path d="M-4 276 Q0 280 4 276" stroke="#b1838a" stroke-width="2" fill="none" />
+                    </g>
+                    <rect x="-101" y="337" width="202" height="17" rx="8" fill="#fff5e5" stroke="#c9af99" stroke-width="3" />
+                    <path d="M-96 342 H96" stroke="#fffdfa" stroke-width="3" />
+                  </g>
+                  <g class="swing-fireflies" fill="#f3ddaa">
+                    <circle cx="150" cy="430" r="3" /><circle cx="830" cy="420" r="3" />
+                    <circle cx="610" cy="520" r="2" /><circle cx="360" cy="340" r="2" />
+                  </g>
+                </svg>
+                <span class="swing-caption">月月 &amp; 砚 · 并排坐，慢慢荡</span>
+              </div>
+              <div class="swing-controls">
+                <div class="swing-timing" aria-label="秋千回摆时机">
+                  <span id="swing-timing-label" data-ready="true">现在可以推 · 从轻轻的一下开始</span>
+                  <div class="swing-timing-track" aria-hidden="true"><span class="swing-timing-zone"></span><i id="swing-timing-dot"></i></div>
+                </div>
+                <div class="swing-actions">
+                  <button id="push-swing" class="swing-push" type="button">月月推一把</button>
+                  <button id="gentle-swing" class="swing-gentle" type="button">慢慢摇</button>
+                </div>
+                <p class="swing-instructions">光点回到绿色中间时，推一把更有劲。推早、推晚也没关系，换另一个人试。</p>
+              </div>
+            </div>
+            <aside class="swing-journal" aria-label="我们的月光记录">
+              <p class="eyebrow">A little moonlight, together</p>
+              <div class="swing-moon-meter">
+                <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="48" class="moon-track" /><circle id="moon-ring" cx="60" cy="60" r="48" class="moon-ring" /><path d="M74 34 A29 29 0 1 0 80 79 A24 24 0 0 1 74 34" fill="#dec693" /></svg>
+                <span id="swing-moon" role="progressbar" aria-label="一起攒的月光" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</span>
+              </div>
+              <h2>一起攒一圈月光</h2>
+              <p id="swing-status" role="status" aria-live="polite">月月先来，哥哥和你并排坐好了。</p>
+              <dl class="swing-record"><div><dt>今晚荡到</dt><dd id="swing-height">0 cm</dd></div><div><dt>我们的最高</dt><dd id="swing-best">0 cm</dd></div></dl>
+              <p id="swing-milestone" class="swing-milestone">轻轻出发 → 花瓣 → 星星 → 月光</p>
+              <button id="restart-swing" class="text-button" type="button">重新一起荡</button>
+              <p id="swing-save-status" class="save-status" role="status">月光和最高记录会留在这扇浏览器里。</p>
+            </aside>
+          </div>
+        </section>
       </main>
     </div>
 
+    <script src="park-navigation.js"></script>
     <script src="claw-rules.js"></script>
     <script src="claw-animation.js"></script>
     <script src="claw-storage.js"></script>
     <script src="claw-machine.js"></script>
+    <script src="swing-rules.js"></script>
+    <script src="swing-storage.js"></script>
+    <script src="swing-game.js"></script>
   </body>
 </html>
