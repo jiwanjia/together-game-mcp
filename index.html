@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PlayTogether，一座让月月和哥哥轮流玩的网页游乐园。"
+    />
+    <title>PlayTogether 游乐园</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23120919'/%3E%3Cpath d='M32 8l6.4 17.6L56 32l-17.6 6.4L32 56l-6.4-17.6L8 32l17.6-6.4z' fill='%23ffc96b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="park-header">
+        <a class="brand" href="#park" aria-label="回到 PlayTogether 游乐园入口">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>PlayTogether</span>
+        </a>
+        <p class="header-note">月月与砚的试玩游乐园</p>
+      </header>
+
+      <main>
+        <section id="park-view" class="view park-view" aria-labelledby="park-title">
+          <div class="park-intro">
+            <p class="eyebrow">Tonight's tiny adventure</p>
+            <h1 id="park-title">一起去游乐园吧。</h1>
+            <p>
+              先从一台会发光的抓娃娃机开始。月月和哥哥轮流握住操纵杆，
+              把喜欢的小家伙带回收藏架。
+            </p>
+          </div>
+
+          <div class="attraction-grid" aria-label="游乐园项目">
+            <article class="attraction-card attraction-card--active">
+              <div class="card-art claw-card-art" aria-hidden="true">
+                <span class="mini-claw">⌄</span>
+                <span class="mini-toy">🐰</span>
+                <span class="mini-toy">🐱</span>
+                <span class="mini-toy">🐻</span>
+              </div>
+              <div class="card-copy">
+                <p class="card-number">01 · NOW OPEN</p>
+                <h2>星光抓娃娃</h2>
+                <p>移动、下爪、带走一只小动物。两个人轮流玩。</p>
+                <button id="enter-claw-machine" class="primary-button" type="button">
+                  去抓娃娃
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="attraction-card attraction-card--soon" aria-disabled="true">
+              <div class="card-art swing-card-art" aria-hidden="true">
+                <span class="swing-seat"></span>
+              </div>
+              <div class="card-copy">
+                <p class="card-number">02 · COMING SOON</p>
+                <h2>月亮秋千</h2>
+                <p>以后一起把秋千荡到月光里。</p>
+              </div>
+            </article>
+
+            <article class="attraction-card attraction-card--soon" aria-disabled="true">
+              <div class="card-art bumper-card-art" aria-hidden="true">
+                <span>✦</span>
+                <span class="bumper-car">▰</span>
+                <span>✦</span>
+              </div>
+              <div class="card-copy">
+                <p class="card-number">03 · COMING SOON</p>
+                <h2>流星碰碰车</h2>
+                <p>以后再开着小车撞进彼此的星轨。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section
+          id="claw-view"
+          class="view claw-view"
+          aria-labelledby="claw-title"
+          hidden
+        >
+          <div class="game-heading">
+            <button id="back-to-park" class="text-button" type="button">← 返回游乐园</button>
+            <div>
+              <p class="eyebrow">Attraction 01</p>
+              <h1 id="claw-title">星光抓娃娃</h1>
+            </div>
+            <div class="turn-badge" aria-live="polite">
+              <span>现在轮到</span>
+              <strong id="current-player">月月</strong>
+            </div>
+          </div>
+
+          <div class="game-layout">
+            <div class="claw-machine" aria-label="抓娃娃机游戏区域">
+              <div class="machine-sign" aria-hidden="true">
+                <span>✦</span>
+                STAR CATCHER
+                <span>✦</span>
+              </div>
+
+              <div class="machine-window">
+                <img class="floral-frame" src="assets/floral-frame.png" alt="" aria-hidden="true" />
+                <div class="window-glow" aria-hidden="true"></div>
+                <div id="aim-guide" class="aim-guide" aria-hidden="true"></div>
+                <div id="claw" class="claw" data-column="2" aria-hidden="true">
+                  <span class="claw-cable"></span>
+                  <span class="claw-head"></span>
+                  <span class="claw-arm claw-arm--left"></span>
+                  <span class="claw-arm claw-arm--right"></span>
+                </div>
+
+                <div id="prize-field" class="prize-field" aria-label="娃娃区">
+                  <button class="prize" type="button" data-column="0" tabindex="-1" aria-label="云朵兔">
+                    <span aria-hidden="true">🐰</span>
+                    <small>云朵兔</small>
+                  </button>
+                  <button class="prize" type="button" data-column="1" tabindex="-1" aria-label="草莓猫">
+                    <span aria-hidden="true">🐱</span>
+                    <small>草莓猫</small>
+                  </button>
+                  <button class="prize" type="button" data-column="2" tabindex="-1" aria-label="蜂蜜熊">
+                    <span aria-hidden="true">🐻</span>
+                    <small>蜂蜜熊</small>
+                  </button>
+                  <button class="prize" type="button" data-column="3" tabindex="-1" aria-label="星星狐">
+                    <span aria-hidden="true">🦊</span>
+                    <small>星星狐</small>
+                  </button>
+                  <button class="prize" type="button" data-column="4" tabindex="-1" aria-label="月光企鹅">
+                    <span aria-hidden="true">🐧</span>
+                    <small>月光企鹅</small>
+                  </button>
+                </div>
+
+                <div class="prize-chute" aria-hidden="true">
+                  <span>PRIZE</span>
+                </div>
+              </div>
+
+              <div class="machine-console">
+                <label class="aim-control" for="aim-position">轻轻挪动爪子
+                  <input id="aim-position" type="range" min="10" max="90" step="0.25" value="50" />
+                </label>
+                <div class="control-pad" aria-label="抓娃娃控制器">
+                  <button id="move-left" class="control-button" type="button" aria-label="爪子向左移动">
+                    ←
+                  </button>
+                  <button id="drop-claw" class="drop-button" type="button">
+                    <span>DROP</span>
+                    下爪
+                  </button>
+                  <button id="move-right" class="control-button" type="button" aria-label="爪子向右移动">
+                    →
+                  </button>
+                </div>
+                <div class="coin-slot" aria-hidden="true"></div>
+              </div>
+              <p id="aim-status" class="aim-status" aria-live="polite"></p>
+            </div>
+
+            <aside class="game-panel" aria-label="游戏状态">
+              <div class="status-card">
+                <p class="panel-label">本轮消息</p>
+                <p id="game-status" class="game-status" role="status" aria-live="polite">
+                  月月先来。左右移动爪子，对准喜欢的娃娃再下爪。
+                </p>
+              </div>
+
+              <div class="collection-card">
+                <div class="collection-heading">
+                  <div>
+                    <p class="panel-label">我们的收藏架</p>
+                    <h2><span id="prize-count">0</span> / 5</h2>
+                  </div>
+                  <button id="reset-game" class="reset-button" type="button">重新摆好</button>
+                </div>
+                <div id="collection" class="collection" aria-live="polite">
+                  <p class="empty-collection">第一只娃娃会住在这里。</p>
+                </div>
+              </div>
+
+              <p class="play-note">
+                按住箭头慢慢挪，轻点微调。送到出口才算抓到；滑落的小家伙还可以再抓。每次下爪后换人。
+              </p>
+              <p id="save-status" class="save-status" role="status">收藏会留在这扇浏览器里，下次还能接着玩。</p>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="claw-rules.js"></script>
+    <script src="claw-animation.js"></script>
+    <script src="claw-storage.js"></script>
+    <script src="claw-machine.js"></script>
+  </body>
+</html>

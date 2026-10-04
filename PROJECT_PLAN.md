@@ -1,3 +1,44 @@
+# 目的：先做一座月月和哥哥能在同一网页里轮流操作的 PlayTogether 游乐园，并用零依赖网页验证第一项抓娃娃小游戏。
+
+## 2026-10-04 抓娃娃升级入口
+
+月月授权的自由对准、夹起摇晃与滑落、出口收藏及水彩贴纸美化，以 `CLAW_UPGRADE_PLAN.md` 为本次有效计划。原第一版与历史文字冒险正文完整保留；秋千待抓娃娃试玩后单独展开。当前实现职责：`claw-rules.js` 为抓取与落点规则，`claw-animation.js` 为可暂停的演出，`claw-storage.js` 为浏览器存档，`claw-machine.js` 为操作与轮次，`index.html`／`styles.css` 为界面，`assets/` 为三件生成水彩素材及提示词记录。
+
+## 2026-09-16 当前权威方向
+
+- 游戏本体是网页，不把 Skill、MCP、Plugin Hub 或 Bridge 当成第一版前置条件。
+- 月月直接用鼠标操作；本地 Codex 与 Claude Code 使用已经安装的 Playwright CLI 查看并点击同一份可见浏览器会话。
+- 游乐园依次规划抓娃娃、荡秋千、碰碰车；本轮只实现抓娃娃，后两项只保留入口占位。
+- 第一版采用纯 HTML、CSS、JavaScript，不安装依赖，不建立 Server、数据库、WebSocket、模型 API 或重复控制层。
+- 抓娃娃的最小循环是：进入项目、左右移动爪子、下爪、得到明确结果、收集奖品或继续尝试。
+- 第一版验收后，再根据真实试玩决定正式美术素材、存档、聊天层，以及是否需要给没有本地 Shell 的 Flask／App 提供一个统一 PlayTogether MCP。
+
+### 共享游戏窗用法
+
+由一个普通终端先打开可见 Chrome；月月随后直接在这扇窗口里玩：
+
+```powershell
+& 'D:\tools\nodejs\playwright-cli.cmd' -s=playtogether open 'http://127.0.0.1:4173/' --browser=chrome --headed --persistent
+```
+
+Codex 或 Claude Code 继续使用同一个 session 名读取与操作：
+
+```powershell
+& 'D:\tools\nodejs\playwright-cli.cmd' -s=playtogether snapshot
+```
+
+Playwright CLI 默认不能看见月月任意打开的普通 Chrome 标签；第一版不为此增加扩展、CDP 或 Bridge，而是共同使用上述明确以 `--headed` 打开的 `playtogether` 可见窗口。
+
+### 本轮验收
+
+- [x] 游乐园入口可以进入抓娃娃机。
+- [x] 月月可以用鼠标完成移动与下爪。
+- [x] Codex 可以通过 Playwright CLI 读取页面并完成同样的核心操作。
+- [x] 不依赖 MCP、Plugin Hub、Bridge、新模型 API 或新安装依赖。
+- [x] 荡秋千与碰碰车没有提前展开实现。
+
+## 历史方案：文字冒险 MCP（保留回查，不作为当前第一版实现授权）
+
 # Together Game MCP
 
 ## 1. 目标
