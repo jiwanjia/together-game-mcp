@@ -1,0 +1,67 @@
+.together-doors { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px; }
+.door-art { display: block; width: 100%; height: 310px; object-fit: cover; }
+.door-art--home { object-position: center 52%; }
+.door-art--park { display: flex; align-items: center; justify-content: center; gap: 36px; background: url('assets/moon-garden.png') center / cover; color: #d6af66; font-size: 3.6rem; }
+.room-heading h1 { font-size: clamp(1.5rem, 3vw, 2.4rem); }
+.room-presence { justify-self: end; font: italic 1rem Georgia, serif; color: #a47f66; }
+.room-layout { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 24px; align-items: center; }
+.room-picture { min-width: 0; }
+.room-scene { position: relative; width: 100%; aspect-ratio: 1; isolation: isolate; touch-action: manipulation; border-radius: 22px; background: #fffcf4; cursor: crosshair; }
+.room-scene:focus-visible { outline: 2px dashed #be957b; outline-offset: 4px; }
+.room-background, .room-table-layer, .room-sofa-front { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; user-select: none; border-radius: inherit; }
+.room-table-layer, .room-sofa-front { background: url('assets/living-room/room.png') center / 100% 100%; }
+.room-table-layer { z-index: 704; clip-path: polygon(44% 58%, 46% 57%, 47% 54%, 47% 52%, 50% 51%, 52% 53%, 51% 56%, 55% 57%, 61% 61%, 64% 64%, 63% 67%, 61% 68%, 61% 70%, 59% 71%, 58% 69%, 53% 68%, 48% 67%, 47% 69%, 45% 69%, 45% 66%, 44% 64%); }
+.room-sofa-front { z-index: 580; clip-path: polygon(49% 46%, 50% 43%, 51% 49%, 50% 54%, 48% 50%); }
+.room-sofa-hotspot { position: absolute; z-index: 2; left: 47%; top: 34%; width: 44%; height: 35%; clip-path: polygon(15% 0%, 100% 54%, 100% 100%, 0% 47%); border: 0; background: transparent; }
+.room-sofa-hotspot span { position: absolute; top: 48%; left: 28%; border-radius: 10px; padding: 5px; background: #fff7eadd; opacity: 0; font-size: .7rem; }
+.room-sofa-hotspot:hover span, .room-sofa-hotspot:focus-visible span { opacity: 1; }
+.room-actor { position: absolute; width: 18%; aspect-ratio: 1; padding: 0; border: 0; background: transparent; transform: translate(-50%, -97%); cursor: pointer; }
+.room-sprite { position: absolute; inset: 0; background-size: 300% 100%; background-position: 0% 0%; background-repeat: no-repeat; transform-origin: 50% 90%; filter: drop-shadow(0 3px 1px #8a674920); }
+.room-actor--yueyue .room-sprite { background-image: url('assets/living-room/yueyue-poses.png'); }
+.room-actor--yan .room-sprite { background-image: url('assets/living-room/yan-poses.png'); }
+.room-actor[data-frame='1'] .room-sprite { background-position: 50% 0%; }
+.room-actor[data-frame='2'] .room-sprite { background-position: 100% 0%; }
+.room-actor[data-facing='right']:not([data-frame='2']) .room-sprite { transform: scaleX(-1); }
+.room-actor[data-walking='true'] .room-sprite { animation: room-step .36s ease-in-out infinite; }
+.room-name { position: absolute; bottom: -13px; left: 50%; transform: translateX(-50%); padding: 2px 7px; border-radius: 8px; background: #fff8e9d9; color: #896852; font-size: clamp(9px, 1vw, 12px); white-space: nowrap; }
+.room-destination { position: absolute; z-index: 3; transform: translate(-50%, -50%); color: #c59665; font-size: 28px; pointer-events: none; }
+.room-notes { padding: 24px 20px; border: 1px solid #dfccae; border-radius: 8px 24px 10px 24px; background: #fff9eecb; box-shadow: 4px 7px 0 #d9c1a11a; }
+.room-notes h2 { margin: 10px 0 20px; font: 1.8rem Georgia, serif; color: #936d50; }
+.room-notes p { font-size: .8rem; line-height: 1.9; }
+#room-status { padding: 12px 0; border-block: 1px dashed #deccb5; color: #9e6f52; min-height: 4em; }
+.room-positions { margin: 18px 0; font-size: .8rem; }
+.room-positions div { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0; }
+.room-positions dd { margin: 0; color: #a78770; }
+.room-chat-note { color: #a08e7a; }
+.room-notes .save-status { margin: 10px 0 0; font-size: .7rem; }
+.room-menu { margin-top: 12px; padding: 16px; border: 1px solid #dfccae; border-radius: 16px; background: #fff9ef; }
+.room-menu-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 12px; }
+.room-menu-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.room-button { min-height: 42px; border: 1px solid #d6b598; border-radius: 12px; padding: 10px 14px; background: #f2e2ca; }
+.room-button:hover { background: #ecd8b8; }
+.room-notes .room-button { width: 100%; margin-top: 8px; font-size: .8rem; }
+.room-follow-dialog { width: min(420px, calc(100% - 32px)); padding: 28px; border: 1px solid #dfccae; border-radius: 24px; background: #fff9ee; color: #795e49; box-shadow: 0 24px 90px #513b4433; }
+.room-follow-dialog h2 { font-size: 1.35rem; }
+.room-follow-dialog p { line-height: 1.8; }
+.room-follow-dialog::backdrop { background: #654c4b40; backdrop-filter: blur(3px); }
+@keyframes room-step { 50% { translate: 0 -2px; } }
+@media (max-width: 900px) {
+  .room-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .room-notes { padding: 16px 20px; }
+  .room-notes h2 { font-size: 1.3rem; margin: 6px 0; }
+  .room-positions { display: flex; gap: 26px; margin: 10px 0; }
+  .room-positions div { gap: 12px; }
+  .room-scene { max-width: 760px; margin: auto; }
+  .door-art { height: 250px; }
+}
+@media (max-width: 600px) {
+  .together-doors { grid-template-columns: 1fr; gap: 18px; }
+  .door-art { height: 220px; }
+  .room-heading { grid-template-columns: 1fr auto; gap: 8px; }
+  .room-heading > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  .room-heading h1 { margin-bottom: 0; }
+  .room-scene { border-radius: 14px; }
+  .room-notes p { margin-block: 8px; }
+  .room-menu-actions .room-button { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .room-actor[data-walking='true'] .room-sprite { animation: none; } }

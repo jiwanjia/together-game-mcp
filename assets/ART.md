@@ -1,5 +1,21 @@
 # 水彩素材记录
 
+## living-room（2026-10-07）
+
+内置imagegen生成`living-room/room.png`与`living-room/yueyue-poses.png`、`living-room/yan-poses.png`。房间沿用户IMAGES目录中摆正后的三人客厅定稿编辑，只移除人物；两份姿势图以原独立人物为身份参考，三列用于站立、迈步与坐下。输出原样复制，原输入未改。房间前景遮挡从同一背景在网页运行时以CSS裁切重复显示，不另做图像编辑。完整提示词如下。
+
+### room.png
+
+Edit the provided approved isometric living-room illustration. Remove ALL THREE PEOPLE completely and reconstruct only the empty cream sofa cushions and pillows behind them. Preserve the exact room camera, large room proportions, centered rear wall corner vertically aligned with front floor point, symmetrical open dollhouse floor, wide THREE-SEAT cream sofa, cream walls, wooden beams and floor, cherry-red accents, bookcase, plants, window and curtains, coffee table, rug and side table with lamp. Do not redesign, move, add or remove any furniture. Keep the same delicate detailed watercolor and pencil storybook illustration, warm sunlight and ivory background. Empty room, no people, no animals, no text or UI. Full original square composition with complete front floor point. This image will be a fixed game background with separately animated characters.
+
+### yueyue-poses.png
+
+Use case: stylized-concept. Use provided woman image as CHARACTER IDENTITY and watercolor-style reference. Create a PRODUCTION GAME SPRITE SHEET on true transparent alpha background. Exactly THREE equal-width cells arranged in ONE HORIZONTAL ROW, no dividers or labels. Each cell has one complete isolated FULL-BODY rendition of the SAME fictional adult woman in TWO-HEAD-TALL chibi game proportions, chestnut long hair, soft straight bangs, small cream bow, warm brown eyes, rosy cheeks, cream pajamas with delicate cherry-red bows and floral details, soft slippers. Keep precise outfit, face and scale identical across all three poses. CELL 1 at x=1/6: standing relaxed, arms gently down, three-quarter view facing down-left. CELL 2 at x=1/2: taking a small step, feet distinctly alternated, same viewing angle as cell1. CELL 3 at x=5/6: SITTING on an invisible sofa, knees bent and legs lowered down-left, hands comfortably on lap, same three-quarter down-left view. No chair, no sofa, no floor, no shadows outside subject, NO opaque background, no white sticker outline, NO text, NO drawn checkerboard. Same top-of-head height and BOTTOM FOOT BASELINE in all cells, characters centered exactly in their respective equal thirds, with generous padding to keep ALL hair and hands INSIDE their own cell. Wide horizontal 3:1 composition. Soft detailed pencil and watercolor, warm cream light, clear game sprite silhouette. Transparency must be genuine, not a colored backdrop.
+
+### yan-poses.png
+
+Use case: stylized-concept. Use provided black-haired man image as CHARACTER IDENTITY and watercolor-style reference. Create a PRODUCTION GAME SPRITE SHEET on true transparent alpha background. Exactly THREE equal-width cells arranged in ONE HORIZONTAL ROW, no dividers or labels. Each cell has one complete isolated FULL-BODY rendition of the SAME fictional adult man in TWO-HEAD-TALL chibi game proportions matching a cozy dollhouse game: short tousled black hair, warm brown eyes, gentle rosy cheeks, cream knitted long-sleeve sweater, charcoal trousers and cream soft slippers. Keep face, outfit, proportions and scale identical across all poses. CELL 1 at x=1/6: standing relaxed, arms gently down, three-quarter view facing down-left. CELL 2 at x=1/2: taking a small step with feet visibly alternated, same view. CELL 3 at x=5/6: SITTING on an invisible sofa, knees bent, thighs extend diagonally down-left and feet below knees, hands relaxed on lap, matching an isometric sofa against the upper-right wall. No furniture, no floor, no shadows outside subject, NO opaque backdrop, NO sticker outline, no text or checkerboard. Same top-of-head level and BOTTOM FOOT BASELINE in all cells. All characters centered in their exact equal thirds with generous padding and NO pixels crossing cell borders. Wide horizontal 3:1 layout. Exquisite delicate watercolor and pencil detailing, soft warm cream light, clear game silhouette. True transparent alpha background.
+
 ## moon-garden.png（2026-10-04）
 
 秋千背景使用内置imagegen生成的新水彩场景，保存为 `assets/moon-garden.png`；原输出直接复制，无图片编辑。人物、绳子、星星与可摆动座板由网页SVG叠加，参考图原文件未变。本图不含黑猫。提示词：

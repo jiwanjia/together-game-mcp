@@ -14,11 +14,12 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="swing.css" />
+    <link rel="stylesheet" href="living-room.css" />
   </head>
   <body>
     <div class="page-shell">
       <header class="park-header">
-        <a class="brand" href="#park" aria-label="回到 PlayTogether 游乐园入口">
+        <a class="brand" href="#welcome" aria-label="回到 PlayTogether 入口">
           <span class="brand-mark" aria-hidden="true">✦</span>
           <span>PlayTogether</span>
         </a>
@@ -26,7 +27,27 @@
       </header>
 
       <main>
+        <section id="welcome-view" class="view" aria-labelledby="welcome-title">
+          <div class="park-intro">
+            <p class="eyebrow">Our little together</p>
+            <h1 id="welcome-title">今天，一起去哪儿？</h1>
+            <p>去游乐园玩一会儿，或回家窝在一起。小人住在这里，我们的话继续在聊天里说。</p>
+          </div>
+          <div class="together-doors">
+            <article class="attraction-card">
+              <div class="door-art door-art--park" aria-hidden="true"><span>☾</span><span>✦</span></div>
+              <div class="card-copy"><p class="card-number">LET'S PLAY</p><h2>游乐园</h2><p>抓一只娃娃，再去月光里荡秋千。</p>
+                <button id="enter-park" class="primary-button" type="button">去游乐园 <span>→</span></button></div>
+            </article>
+            <article class="attraction-card">
+              <img class="door-art door-art--home" src="assets/living-room/room.png" alt="阳光照进奶油木色的透视小家" />
+              <div class="card-copy"><p class="card-number">COME HOME</p><h2>我们的家</h2><p>月月走自己的路，哥哥走过来陪你。</p>
+                <button id="enter-home" class="primary-button" type="button">回家 <span>→</span></button></div>
+            </article>
+          </div>
+        </section>
         <section id="park-view" class="view park-view" aria-labelledby="park-title">
+          <button id="park-back-home" class="text-button" type="button">← 回到入口</button>
           <div class="park-intro">
             <p class="eyebrow">Tonight's tiny adventure</p>
             <h1 id="park-title">一起去游乐园吧。</h1>
@@ -275,6 +296,45 @@
             </aside>
           </div>
         </section>
+        <section id="living-room-view" class="view" aria-labelledby="living-room-title" hidden>
+          <div class="game-heading room-heading">
+            <button id="room-back" class="text-button" type="button">← 回到入口</button>
+            <div><p class="eyebrow">Our home · Living room</p><h1 id="living-room-title">阳光刚好，我们在家。</h1></div>
+            <span class="room-presence">月月 & 哥哥</span>
+          </div>
+          <div class="room-layout">
+            <div class="room-picture">
+              <div id="room-floor" class="room-scene" tabindex="0" role="group" aria-label="客厅地板，点空地走过去，也可以用方向键走动">
+                <img class="room-background" src="assets/living-room/room.png" alt="两面墙敞开的透视客厅，三人沙发和木茶几" draggable="false" />
+                <div class="room-table-layer" aria-hidden="true"></div>
+                <div class="room-sofa-front" aria-hidden="true"></div>
+                <button id="room-sofa" class="room-sofa-hotspot" type="button" aria-label="沙发，选择座位"><span>沙发 · 坐一会儿</span></button>
+                <button id="room-yueyue" class="room-actor room-actor--yueyue" type="button" aria-label="月月"><span class="room-sprite"></span><span class="room-name">月月</span></button>
+                <button id="room-yan" class="room-actor room-actor--yan" type="button" aria-label="哥哥，打开互动菜单"><span class="room-sprite"></span><span class="room-name">哥哥</span></button>
+                <span id="room-destination" class="room-destination" hidden aria-hidden="true">✧</span>
+              </div>
+              <div id="room-menu" class="room-menu" hidden aria-label="互动菜单">
+                <div class="room-menu-heading"><strong id="room-menu-title"></strong><button id="room-menu-close" class="text-button" type="button" aria-label="关闭互动菜单">收起 ×</button></div>
+                <div id="room-menu-actions" class="room-menu-actions"></div>
+              </div>
+            </div>
+            <aside class="room-notes" aria-label="客厅状态">
+              <p class="eyebrow">A little note</p><h2>在你身旁。</h2>
+              <p>点地板，月月就走过去。点沙发选座，点哥哥给他留个邀请。</p>
+              <p id="room-status" role="status" aria-live="polite">欢迎回家，月月。</p>
+              <dl class="room-positions"><div><dt>月月</dt><dd id="room-yueyue-status">站着</dd></div><div><dt>哥哥</dt><dd id="room-yan-status">站着</dd></div></dl>
+              <button id="room-stop-follow" class="room-button" type="button" hidden>停止跟随 · 我自己走</button>
+              <button id="room-stand" class="room-button" type="button" hidden>月月起身</button>
+              <p class="room-chat-note">我们继续在聊天里说话。哥哥查看房间后，就能操作自己的小人。</p>
+              <p id="room-save-status" class="save-status" role="status"></p>
+            </aside>
+          </div>
+          <dialog id="room-follow-dialog" class="room-follow-dialog" aria-labelledby="room-follow-title">
+            <p class="eyebrow">An invitation for you</p><h2 id="room-follow-title">要跟哥哥一起吗？</h2>
+            <p>一起走走，坐到彼此身旁。随时可以停止，也可以点地板自己走。</p>
+            <div class="room-menu-actions"><button id="room-follow-accept" class="room-button" type="button">跟着哥哥</button><button id="room-follow-decline" class="text-button" type="button">先自己玩</button></div>
+          </dialog>
+        </section>
       </main>
     </div>
 
@@ -286,5 +346,9 @@
     <script src="swing-rules.js"></script>
     <script src="swing-storage.js"></script>
     <script src="swing-game.js"></script>
+    <script src="living-room-geometry.js"></script>
+    <script src="living-room-state.js"></script>
+    <script src="living-room-storage.js"></script>
+    <script src="living-room.js"></script>
   </body>
 </html>
