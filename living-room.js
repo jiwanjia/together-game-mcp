@@ -109,6 +109,7 @@
     display(); wake();
   });
   document.addEventListener("visibilitychange", () => { if (frame) cancelAnimationFrame(frame); frame = 0; wake(); });
+  document.addEventListener("playtogether-room-update", () => { display(); wake(); });
   floor.addEventListener("click", wake);
   document.querySelector("#room-menu-actions").addEventListener("click", wake);
   window.addEventListener("pagehide", () => window.LivingRoomStorage.save(room.actors));
