@@ -16,7 +16,7 @@
       this.requests = [];
       this.events = [];
       this.speech = new Speech();
-      this.speeches = { yan: this.speech, yu: new Speech("yu") };
+      this.speeches = { yan: this.speech, yu: new Speech("yu"), yueyue: new Speech("yueyue") };
       this.reading = new Reading(this);
       for (const actor of Object.values(this.actors)) {
         actor.path = [];

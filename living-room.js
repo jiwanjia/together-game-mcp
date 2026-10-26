@@ -19,7 +19,8 @@
   let active = false, lastTime = 0, frame = 0, savedRevision = room.revision, renderedRevision = -1, dialogId = null, menuKind = null;
   const labels = { standing: "站着", walking: "走动中", sitting: "坐着" };
   const companion = new window.LivingRoomCompanionControls(room, floor, result => { resultMessage(result); wake(); }, showMenu);
-  const reading = new window.ReadingView(room, result => { resultMessage(result); wake(); });
+  const reading = new window.ReadingView(room, result => { resultMessage(result); wake(); }, showMenu);
+  const readingArt = new window.ReadingArt(floor);
   function message(text) { document.querySelector("#room-status").textContent = text; }
   function display() {
     const state = room.snapshot();
@@ -50,6 +51,7 @@
       else status.textContent = actor.seat !== null && actor.posture !== "walking" ? `${geometry.seats[actor.seat].name} · 坐着` : labels[actor.posture];
     }
     if (active) window.SofaSeatedTrio.render(state.reading.session ? {} : state.actors);
+    readingArt.render(state, active);
     reading.render(state, active);
     speechView.render(active ? state.speech : null);
     bedroomSpeechView.render(view === "bedroom" ? state.speech : null);
@@ -88,8 +90,8 @@
     const actions = document.querySelector("#room-menu-actions");
     actions.replaceChildren();
     menu.dataset.kind = menuKind;
-    document.querySelector("#room-menu-title").textContent = menuKind === "sofa" ? "沙发 · 月月坐哪里？" : menuKind === "yu" ? "With Yu" : "给哥哥留个邀请";
-    const options = menuKind === "yu" ? companion.options() : menuKind === "sofa" ? geometry.seats.map(seat => ({
+    document.querySelector("#room-menu-title").textContent = reading.title(menuKind) ?? (menuKind === "sofa" ? "沙发 · 月月坐哪里？" : menuKind === "yu" ? "With Yu" : "给哥哥留个邀请");
+    const options = reading.title(menuKind) ? reading.options(menuKind) : menuKind === "yu" ? companion.options() : menuKind === "sofa" ? geometry.seats.map(seat => ({
       text: `${seat.name}${room.occupant(seat.id) ? ` · ${room.actors[room.occupant(seat.id)].name}` : " · 空着"}`,
       disabled: room.occupant(seat.id) !== null, run: () => resultMessage(room.sit("yueyue", seat.id))
     })) : [{ text: "过来陪我", run: () => room.inviteFromUser("come") },
@@ -100,8 +102,9 @@
       const button = document.createElement("button");
       button.type = "button"; button.className = "room-button";
       button.textContent = option.text; button.disabled = Boolean(option.disabled);
-      button.addEventListener("click", () => {
-        const result = option.run();
+      button.addEventListener("click", event => {
+        const result = option.run(event);
+        if (option.keepOpen) return;
         menuKind = null; menu.hidden = true; display();
         if (result?.ok === false) message(result.error);
       });
@@ -173,7 +176,7 @@
       if (input?.action !== "observe" && (document.hidden || (!active && !bedroomSay))) return { ok: false, error: "请先打开可见的客厅；卧室目前只能说话。" };
       const result = room.command(input); resultMessage(result); wake(); return result;
     },
-    observe() { return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say", "read_aloud", "invite_read", "read_line", "end_read"] }; }
+    observe() { return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say", "read_aloud", "invite_read", "accept_read", "decline_read", "read_line", "end_read"] }; }
   });
   window.TogetherYu = companion.interface(() => window.TogetherHome.observe());
   display();

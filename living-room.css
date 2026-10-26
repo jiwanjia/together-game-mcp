@@ -13,8 +13,8 @@
 .room-table-layer { z-index: 704; clip-path: polygon(43% 58%, 45% 56.5%, 46% 56.5%, 45.5% 55%, 46.5% 54.5%, 46% 53.5%, 47.5% 53.3%, 47.5% 52%, 48.7% 52.8%, 49.5% 52.3%, 50% 53.5%, 51% 53%, 51.5% 54.5%, 52% 55%, 51% 56%, 50.5% 57%, 53% 57.5%, 56% 59%, 59% 61%, 61.5% 63%, 62.5% 65%, 62% 67%, 61% 68%, 61% 70%, 60% 70.5%, 59% 70%, 59% 69%, 53% 68%, 47% 66%, 47% 69%, 46% 69%, 45.5% 68.5%, 45.5% 65%, 44% 63.5%, 43% 61.5%, 42.7% 60%); }
 .room-sofa-front { z-index: 580; clip-path: polygon(49% 46%, 50% 43%, 51% 49%, 50% 54%, 48% 50%); }
 .room-sofa-hotspot { position: absolute; z-index: 2; left: 47%; top: 34%; width: 44%; height: 35%; clip-path: polygon(15% 0%, 100% 54%, 100% 100%, 0% 47%); border: 0; background: transparent; }
-.room-sofa-hotspot span { position: absolute; top: 48%; left: 28%; border-radius: 10px; padding: 5px; background: #fff7eadd; opacity: 0; font-size: .7rem; }
-.room-sofa-hotspot:hover span, .room-sofa-hotspot:focus-visible span { opacity: 1; }
+.room-furniture-hotspot span { position: absolute; top: 48%; left: 28%; border-radius: 10px; padding: 5px; background: #fff7eadd; opacity: 0; font-size: .7rem; }
+.room-furniture-hotspot:hover span, .room-furniture-hotspot:focus-visible span { opacity: 1; }
 .room-actor { position: absolute; width: 18%; aspect-ratio: 1; padding: 0; border: 0; background: transparent; transform: translate(-50%, -97%); cursor: pointer; }
 .room-sprite { position: absolute; inset: 0; background-size: 300% 100%; background-position: 0% 0%; background-repeat: no-repeat; transform: translateX(var(--room-frame-shift, 0%)); transform-origin: 50% 90%; filter: drop-shadow(0 3px 1px #8a674920); }
 .room-actor--yueyue .room-sprite { background-image: url('assets/living-room/yueyue-poses-upright.png'); --room-frame-shift: -6%; }
