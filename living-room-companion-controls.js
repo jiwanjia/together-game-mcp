@@ -62,7 +62,7 @@
     }
     interface(observe) {
       return Object.freeze({
-        observe: () => ({ ...observe(), controlledActor: "yu", actions: ["observe", "move", "come", "sit", "stand", "face", "say"] }),
+        observe: () => ({ ...observe(), controlledActor: "yu", actions: ["observe", "move", "come", "sit", "stand", "face", "say", "read_aloud", "invite_read", "read_line", "end_read"] }),
         act: input => {
           if (input?.action !== "observe" && (!this.active || document.hidden)) return { ok: false, error: "Open the visible living room first." };
           const result = this.command(input);

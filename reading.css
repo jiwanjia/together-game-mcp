@@ -1,0 +1,9 @@
+.reading-shelf { position: absolute; z-index: 2; left: 42%; top: 26%; width: 16%; height: 16%; border: 0; background: transparent; clip-path: polygon(0 35%, 80% 0, 100% 65%, 25% 100%); cursor: pointer; }
+.reading-shelf span { padding: 5px; border-radius: 8px; background: #fff7eadd; opacity: 0; }
+.reading-shelf:hover span, .reading-shelf:focus-visible span { opacity: 1; }
+.reading-book { display: none; position: absolute; left: 31%; top: 56%; width: 43%; height: auto; filter: drop-shadow(0 2px 2px #74533725); pointer-events: none; }
+.room-actor[data-reading='book'] .reading-book { display: block; }
+.reading-menu { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.reading-menu .room-menu-actions { flex-direction: column; }
+.reading-menu .room-button { width: 100%; }
+#reading-status { color: #896852; }

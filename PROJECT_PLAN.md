@@ -251,3 +251,9 @@ together-game-mcp/
 
 ## 2026-10-27 Sofa trio reference and right-seat alignment
 沿SOFA_TRIO_PLAN.md，三人坐稳时用sofa-seated-trio.js的SVG遮罩组合既有原像素双人PNG与原图屿区域，保留原脸/衣服/牵手，不使用重绘试作。姓名/身体点击/气泡同步，起身恢复双人/单人层；逻辑座位和存档不改。右座仅显示foot.v收.045，约向内21.375单位。47规则+37项1280/390/320隔离可见浏览器检查通过。VPS6资源静态更新、5资产隔离路由字节核同、10容器及原transport.actors保持，无安装/重启/认证变更；真人已登录页/Safari待刷新。原旧dirty保留，只提交本轮增量，Git终局见交付回复。
+
+## 2026-10-27 Bookshelf reading · local implementation
+- 当前范围READING_PLAN.md：自己看、邀请Yan/Yu/Both一起看、请Yan/Yu念书；同伴read_aloud/invite_read/read_line/end_read复用同一ReadingSession，月月只在可信页面交互后接受邀请。
+- 复用原坐姿与代码小书，不生成新人物；阅读暂不恢复牵手合图，结束后正常恢复。走开/起身/离场/刷新结束阅读，拒绝/过期不移动月月；不新增存档。
+- 15项新增规则及既有相关规则共62项通过；36项可见浏览器检查覆盖1280/390/320、三个入口、两同伴邀请/可信接受与拒绝/合成点击拒绝/文字/退出/正式localStorage不变，0页面异常。首次两次验收脚本等待因旧弹窗未重载和合图尚未创建而失败，修正夹具后通过，没有为夹具改业务逻辑。
+- 仅4173本地试玩版，VPS共享RoomService/MCP未接入，无TTS/模型调用、安装/删除/服务重启。原dirty保留，Git旧依赖保存方式待月月选择，不宣称收尾。

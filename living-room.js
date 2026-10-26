@@ -19,10 +19,11 @@
   let active = false, lastTime = 0, frame = 0, savedRevision = room.revision, renderedRevision = -1, dialogId = null, menuKind = null;
   const labels = { standing: "站着", walking: "走动中", sitting: "坐着" };
   const companion = new window.LivingRoomCompanionControls(room, floor, result => { resultMessage(result); wake(); }, showMenu);
+  const reading = new window.ReadingView(room, result => { resultMessage(result); wake(); });
   function message(text) { document.querySelector("#room-status").textContent = text; }
   function display() {
     const state = room.snapshot();
-    const pair = geometry.seatedPair(state.actors);
+    const pair = state.reading.session ? null : geometry.seatedPair(state.actors);
     const pairImage = document.querySelector("#room-seated-pair");
     pairImage.hidden = !pair;
     if (pair) {
@@ -48,7 +49,8 @@
       if (id === "yu") status.textContent = actor.seat !== null && actor.posture !== "walking" ? `${["Left", "Middle", "Right"][actor.seat]} · Sitting` : { standing: "Standing", walking: "Walking", sitting: "Sitting" }[actor.posture];
       else status.textContent = actor.seat !== null && actor.posture !== "walking" ? `${geometry.seats[actor.seat].name} · 坐着` : labels[actor.posture];
     }
-    if (active) window.SofaSeatedTrio.render(state.actors);
+    if (active) window.SofaSeatedTrio.render(state.reading.session ? {} : state.actors);
+    reading.render(state, active);
     speechView.render(active ? state.speech : null);
     bedroomSpeechView.render(view === "bedroom" ? state.speech : null);
     companion.render(active);
@@ -93,6 +95,7 @@
     })) : [{ text: "过来陪我", run: () => room.inviteFromUser("come") },
       { text: "一起坐", run: () => room.inviteFromUser("sit") }];
     if (menuKind === "sofa" && room.actors.yueyue.seat !== null) options.push({ text: "月月起身", run: () => room.stand("yueyue") });
+    if (["yan", "yu"].includes(menuKind)) options.push(...reading.companionOptions(menuKind));
     options.forEach(option => {
       const button = document.createElement("button");
       button.type = "button"; button.className = "room-button";
@@ -144,7 +147,7 @@
     else if (room.speech.expire()) room.revision++;
     lastTime = time;
     display();
-    if (Object.values(room.speeches).some(speech => speech.current) || (active && (Object.values(room.actors).some(actor => actor.path.length) || room.invitation))) frame = requestAnimationFrame(animate);
+    if (Object.values(room.speeches).some(speech => speech.current) || (active && (Object.values(room.actors).some(actor => actor.path.length) || room.invitation || room.reading.invitation))) frame = requestAnimationFrame(animate);
   }
   function wake() { if ((active || view === "bedroom") && !document.hidden && !frame) { lastTime = 0; frame = requestAnimationFrame(animate); } }
   document.addEventListener("park-view-change", event => {
@@ -153,7 +156,7 @@
     }
     view = event.detail;
     active = view === "home";
-    if (!active) { room.stopFollow(); menuKind = null; menu.hidden = true; }
+    if (!active) { room.reading.end(); room.stopFollow(); menuKind = null; menu.hidden = true; }
     if (frame) cancelAnimationFrame(frame); frame = 0;
     display(); wake();
   });
@@ -170,7 +173,7 @@
       if (input?.action !== "observe" && (document.hidden || (!active && !bedroomSay))) return { ok: false, error: "请先打开可见的客厅；卧室目前只能说话。" };
       const result = room.command(input); resultMessage(result); wake(); return result;
     },
-    observe() { return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say"] }; }
+    observe() { return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say", "read_aloud", "invite_read", "read_line", "end_read"] }; }
   });
   window.TogetherYu = companion.interface(() => window.TogetherHome.observe());
   display();

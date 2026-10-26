@@ -2,6 +2,7 @@
   "use strict";
   const geometry = typeof module === "object" && module.exports ? require("./living-room-geometry.js") : root.LivingRoomGeometry;
   const Speech = typeof module === "object" && module.exports ? require("./living-room-speech.js") : root.LivingRoomSpeech;
+  const Reading = typeof module === "object" && module.exports ? require("./reading-session.js") : root.ReadingSession;
   class Room {
     constructor(saved) {
       this.actors = {
@@ -16,6 +17,7 @@
       this.events = [];
       this.speech = new Speech();
       this.speeches = { yan: this.speech, yu: new Speech("yu") };
+      this.reading = new Reading(this);
       for (const actor of Object.values(this.actors)) {
         actor.path = [];
         actor.facing = "left";
@@ -35,7 +37,7 @@
     }
     snapshot() {
       return {
-        room: "living-room", revision: this.revision, following: this.following, speech: this.speech.snapshot(),
+        room: "living-room", revision: this.revision, reading: this.reading.snapshot(), following: this.following, speech: this.speech.snapshot(),
         speeches: Object.fromEntries(Object.entries(this.speeches).map(([id, speech]) => [id, speech.snapshot()])),
         actors: Object.fromEntries(Object.entries(this.actors).map(([id, actor]) => [id, {
           id, name: actor.name, u: actor.u, v: actor.v, seat: actor.seat, facing: actor.facing,
@@ -66,6 +68,7 @@
         if (!followerPath) return { ok: false, error: "这里容不下两个人，请换一处空地。" };
       }
       if (id === "yueyue") this.stopFollow();
+      this.reading.interrupt(id);
       this.startWalk(id, target, null, path);
       if (followerPath) this.startWalk("yueyue", followerTarget, null, followerPath);
       this.record(`${this.actors[id].name}开始走动。`);
@@ -85,11 +88,13 @@
       const routes = assignments.map(([actor, index]) => geometry.findPath(this.actors[actor], geometry.seats[index].approach));
       if (routes.some(path => !path)) return { ok: false, error: "暂时走不到这个座位。" };
       if (id === "yueyue") this.stopFollow();
+      this.reading.interrupt(id);
       assignments.forEach(([actor, index], cursor) => this.startWalk(actor, geometry.seats[index].approach, index, routes[cursor]));
       this.record(`${this.actors[id].name}准备坐到${geometry.seats[seat].name}。`);
       return { ok: true, status: "started" };
     }
     stand(id) {
+      this.reading.interrupt(id);
       const actor = this.actors[id];
       actor.seat = null;
       actor.path = [];
@@ -129,6 +134,9 @@
       if (!["yan", "yu"].includes(actorId) || (input.actor !== undefined && input.actor !== actorId)) return { ok: false, error: "Each companion interface controls only its own character." };
       if (input.action === "observe") return { ok: true, state: this.snapshot() };
       if (input.revision !== undefined && input.revision !== this.revision) return { ok: false, error: "房间已变化，请重新观察。" };
+      const readingResult = this.reading.command(input, actorId, now);
+      if (readingResult) return { ...readingResult, state: this.snapshot() };
+      if (input.action === "invite_follow" && (this.reading.session || this.reading.invitation)) return { ok: false, error: "Close the book before starting a follow invitation." };
       let result;
       switch (input.action) {
         case "say":
@@ -165,6 +173,7 @@
       return { ...result, state: this.snapshot() };
     }
     advance(seconds, now = Date.now()) {
+      this.reading.expire(now);
       for (const speech of Object.values(this.speeches)) { if (speech.expire(now)) this.revision++; }
       if (this.invitation && now >= this.invitation.expiresAt) { this.invitation = null; this.record("邀请到时间了，月月继续自己玩。 "); }
       for (const actor of Object.values(this.actors)) {
