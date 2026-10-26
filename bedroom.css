@@ -1,0 +1,33 @@
+.bedroom-scene { cursor: default; overflow: hidden; }
+.bedroom-cuddle {
+  position: absolute;
+  z-index: 1;
+  left: 10.5%;
+  top: 34.5%;
+  width: 27%;
+  height: auto;
+  transform: rotate(-30deg);
+  transform-origin: 50% 35%;
+  pointer-events: none;
+  user-select: none;
+  /* Keep the blanket's left edge inside the bed, clear of the bedside lamp. */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 45% 100%, 27% 68%, 18% 55%, 18% 45%, 0% 45%);
+}
+/* Restore the room's own quilt and bed foot over the cutout's oversized quilt. */
+.bedroom-quilt-front {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: url('assets/bedroom/rose-corner-window-room-v1.png') center / 100% 100%;
+  clip-path: polygon(16% 57%, 24% 52%, 34% 47%, 40% 43%, 47% 46%, 53% 53%, 56% 58%, 56% 68%, 37% 74%, 15% 66%);
+  pointer-events: none;
+}
+.bedroom-notes h2 { line-height: 1.5; }
+.bedroom-yan-anchor {
+  position: absolute;
+  left: 25%;
+  top: 36%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}

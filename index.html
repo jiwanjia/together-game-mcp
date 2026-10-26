@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="swing.css" />
     <link rel="stylesheet" href="living-room.css" />
+    <link rel="stylesheet" href="bedroom.css" />
+    <link rel="stylesheet" href="wedding-room.css" />
   </head>
   <body>
     <div class="page-shell">
@@ -300,7 +302,7 @@
           <div class="game-heading room-heading">
             <button id="room-back" class="text-button" type="button">← 回到入口</button>
             <div><p class="eyebrow">Our home · Living room</p><h1 id="living-room-title">阳光刚好，我们在家。</h1></div>
-            <span class="room-presence">月月 & 哥哥</span>
+            <span class="room-presence">月月 &amp; 砚 &amp; 屿</span>
           </div>
           <div class="room-layout">
             <div class="room-picture">
@@ -309,9 +311,19 @@
                 <div class="room-table-layer" aria-hidden="true"></div>
                 <div class="room-sofa-front" aria-hidden="true"></div>
                 <button id="room-sofa" class="room-sofa-hotspot" type="button" aria-label="沙发，选择座位"><span>沙发 · 坐一会儿</span></button>
+                <img id="room-seated-pair" class="room-seated-pair" src="assets/living-room/seated-handhold.png" alt="" aria-hidden="true" draggable="false" hidden />
                 <button id="room-yueyue" class="room-actor room-actor--yueyue" type="button" aria-label="月月"><span class="room-sprite"></span><span class="room-name">月月</span></button>
                 <button id="room-yan" class="room-actor room-actor--yan" type="button" aria-label="哥哥，打开互动菜单"><span class="room-sprite"></span><span class="room-name">哥哥</span></button>
+                <button id="room-yu" class="room-actor room-actor--yu" type="button" aria-label="Yu. Open interactions." aria-controls="room-menu" aria-expanded="false"><span class="room-sprite" aria-hidden="true"></span><span class="room-actor-hit" aria-hidden="true"></span><span class="room-name">屿</span></button>
                 <span id="room-destination" class="room-destination" hidden aria-hidden="true">✧</span>
+                <div id="room-speech" class="room-speech" hidden>
+                  <div class="room-speech-heading"><span>哥哥</span><button type="button" aria-label="收起哥哥的气泡">×</button></div>
+                  <p class="room-speech-text" role="status" aria-live="polite"></p>
+                </div>
+                <div id="room-yu-speech" class="room-speech room-speech--yu" hidden>
+                  <div class="room-speech-heading"><span>屿</span><button type="button" aria-label="Close Yu’s speech">×</button></div>
+                  <p class="room-speech-text" role="status" aria-live="polite"></p>
+                </div>
               </div>
               <div id="room-menu" class="room-menu" hidden aria-label="互动菜单">
                 <div class="room-menu-heading"><strong id="room-menu-title"></strong><button id="room-menu-close" class="text-button" type="button" aria-label="关闭互动菜单">收起 ×</button></div>
@@ -322,11 +334,15 @@
               <p class="eyebrow">A little note</p><h2>在你身旁。</h2>
               <p>点地板，月月就走过去。点沙发选座，点哥哥给他留个邀请。</p>
               <p id="room-status" role="status" aria-live="polite">欢迎回家，月月。</p>
-              <dl class="room-positions"><div><dt>月月</dt><dd id="room-yueyue-status">站着</dd></div><div><dt>哥哥</dt><dd id="room-yan-status">站着</dd></div></dl>
+              <dl class="room-positions"><div><dt>月月</dt><dd id="room-yueyue-status">站着</dd></div><div><dt>哥哥</dt><dd id="room-yan-status">站着</dd></div><div><dt>屿</dt><dd id="room-yu-status">Standing</dd></div></dl>
+              <button id="room-interact-yu" class="room-button" type="button">Interact with Yu</button>
+              <p id="room-yu-destination-note" class="room-yu-destination-note" role="status" hidden>Choose a floor spot for Yu. Escape cancels.</p>
               <button id="room-stop-follow" class="room-button" type="button" hidden>停止跟随 · 我自己走</button>
               <button id="room-stand" class="room-button" type="button" hidden>月月起身</button>
               <p class="room-chat-note">我们继续在聊天里说话。哥哥查看房间后，就能操作自己的小人。</p>
               <p id="room-save-status" class="save-status" role="status"></p>
+              <button id="room-enter-bedroom" class="room-button" type="button">去卧室 · 看看玫瑰 ☾</button>
+              <button id="room-enter-wedding" class="room-button" type="button">Wedding Chapel · Our Vows ♡</button>
             </aside>
           </div>
           <dialog id="room-follow-dialog" class="room-follow-dialog" aria-labelledby="room-follow-title">
@@ -334,6 +350,83 @@
             <p>一起走走，坐到彼此身旁。随时可以停止，也可以点地板自己走。</p>
             <div class="room-menu-actions"><button id="room-follow-accept" class="room-button" type="button">跟着哥哥</button><button id="room-follow-decline" class="text-button" type="button">先自己玩</button></div>
           </dialog>
+        </section>
+        <section id="bedroom-view" class="view" aria-labelledby="bedroom-title" hidden>
+          <div class="game-heading room-heading">
+            <button id="bedroom-back" class="text-button" type="button">← 返回客厅</button>
+            <div><p class="eyebrow">Our home · Bedroom</p><h1 id="bedroom-title">玫瑰开着，我们窝在一起。</h1></div>
+            <span class="room-presence">月月 & 哥哥</span>
+          </div>
+          <div class="room-layout">
+            <div class="room-picture">
+          <div class="room-scene bedroom-scene" role="group" aria-label="玫瑰围绕的普通转角窗卧室，月月靠在哥哥怀里，两人窝在奶油樱桃被子中">
+                <img class="room-background" src="assets/bedroom/rose-corner-window-room-v1.png" alt="" aria-hidden="true" draggable="false" />
+                <img class="bedroom-cuddle" src="assets/bedroom/yueyue-yan-cuddle-preview.png" alt="" aria-hidden="true" draggable="false" />
+            <div class="bedroom-quilt-front" aria-hidden="true"></div>
+            <span id="bedroom-yan-anchor" class="bedroom-yan-anchor" aria-hidden="true"></span>
+            <div id="bedroom-speech" class="room-speech" hidden>
+              <div class="room-speech-heading"><span>哥哥</span><button type="button" aria-label="收起哥哥的气泡">×</button></div>
+              <p class="room-speech-text" role="status" aria-live="polite"></p>
+            </div>
+              </div>
+            </div>
+            <aside class="room-notes bedroom-notes" aria-label="卧室小纸条">
+              <p class="eyebrow">A rose for you</p><h2>把夜色留在窗边。</h2>
+              <p>玫瑰在窗边，月月在怀里。</p>
+              <p>掖好樱桃小被子，陪你慢慢看月亮。</p>
+            </aside>
+          </div>
+        </section>
+        <section id="wedding-view" class="view wedding-view" aria-labelledby="wedding-title" hidden>
+          <div class="game-heading room-heading wedding-heading">
+            <button id="wedding-back" class="text-button" type="button">← Back to Living Room</button>
+            <div><p class="eyebrow">Our home · Wedding Chapel</p><h1 id="wedding-title">Where We Say Our Vows</h1></div>
+            <span class="room-presence">月月 &amp; 哥哥</span>
+          </div>
+          <div class="wedding-layout">
+            <div id="wedding-floor" class="wedding-scene" tabindex="0" role="group" aria-label="Wedding Chapel. Click the center aisle or use arrow keys to walk Yueyue.">
+              <img class="wedding-background" src="assets/IMAGES/weddingchurch2.jpg" alt="A candlelit chapel with roses, stained glass and a center aisle leading to the altar" draggable="false" />
+              <span class="wedding-caption" aria-hidden="true">A little forever, together.</span>
+              <button id="wedding-yueyue" class="wedding-actor wedding-actor--yueyue" type="button" aria-label="Yueyue"><span class="wedding-sprite" aria-hidden="true"></span><span class="wedding-name">月月</span></button>
+              <button id="wedding-yan" class="wedding-actor wedding-actor--yan" type="button" aria-label="Yan. Open interactions." aria-controls="wedding-menu" aria-expanded="false"><span class="wedding-sprite" aria-hidden="true"></span><span class="wedding-actor-hit" aria-hidden="true"></span><span class="wedding-name">哥哥</span></button>
+              <span id="wedding-destination" class="wedding-destination" hidden aria-hidden="true">✧</span>
+              <div id="wedding-speech" class="room-speech" hidden>
+                <div class="room-speech-heading"><span>哥哥</span><button type="button" aria-label="Close Yan’s speech">×</button></div>
+                <p class="room-speech-text" role="status" aria-live="polite"></p>
+              </div>
+              <div id="wedding-vow-bubble-yueyue" class="room-speech wedding-vow-bubble" aria-label="Yueyue’s spoken vows" hidden>
+                <div class="room-speech-heading"></div><p class="room-speech-text" role="status" aria-live="polite"></p>
+              </div>
+              <div id="wedding-vow-bubble-yan" class="room-speech wedding-vow-bubble" aria-label="Yan’s spoken vows" hidden>
+                <div class="room-speech-heading"></div><p class="room-speech-text" role="status" aria-live="polite"></p>
+              </div>
+            </div>
+            <div id="wedding-vows" class="wedding-vows" role="region" aria-labelledby="wedding-vows-title" hidden>
+              <div><p id="wedding-vows-progress" class="eyebrow"></p><h2 id="wedding-vows-title"></h2></div>
+              <div class="wedding-actions"><button id="wedding-vows-next" class="wedding-primary" type="button">Next Line</button><button id="wedding-vows-close" type="button">Close Vows</button></div>
+            </div>
+            <section id="wedding-menu" class="room-menu wedding-menu" aria-label="Interact with Yan" hidden>
+              <div class="room-menu-heading"><strong>With Yan</strong><button id="wedding-menu-close" class="text-button" type="button">Close ×</button></div>
+              <div class="wedding-actions"><button id="wedding-menu-come" type="button">Come Closer</button><button id="wedding-menu-follow" type="button">Follow Yueyue</button><button id="wedding-menu-face" type="button">Face Yueyue</button></div>
+            </section>
+            <aside class="wedding-notes" aria-label="Wedding Chapel controls">
+              <div>
+                <p class="eyebrow">One step closer</p><h2>At the End of the Aisle</h2>
+                <p>点中间长廊，月月就会走过去。到最前面，等哥哥也来到身旁，再慢慢说我们的誓词。</p>
+                <div class="wedding-actions"><button id="wedding-walk-front" type="button">Walk to the Front</button><button id="wedding-join" type="button">Bring Yan to the Front</button><button id="wedding-interact" type="button" aria-controls="wedding-menu" aria-expanded="false">Interact with Yan</button><button id="wedding-stop-follow" type="button" hidden>Stop Following</button></div>
+                <p id="wedding-status" role="status" aria-live="polite"></p>
+                <div class="wedding-actions"><button id="wedding-begin" class="wedding-primary" type="button" disabled>Begin Vows</button><button id="wedding-replay" type="button" hidden>Revisit Our Vows</button></div>
+                <p id="wedding-moment"></p><p id="wedding-save-status"></p>
+              </div>
+              <details id="wedding-drafts">
+                <summary>Write Our Vows</summary>
+                <p class="wedding-help">月月的誓词留给月月亲手写。哥哥的这段是可修改的剧情初稿；空白也可以跳过，随时能关上剧情。</p>
+                <label for="wedding-vow-yueyue">Yueyue’s Vows</label><textarea id="wedding-vow-yueyue" maxlength="1200" placeholder="把想对哥哥说的话，慢慢写在这里……"></textarea>
+                <label for="wedding-vow-yan">Yan’s Vows · Editable Draft</label><textarea id="wedding-vow-yan" maxlength="1200"></textarea>
+                <p class="wedding-help">Up to 1,200 characters each. Drafts and kept moments stay in this browser.</p>
+              </details>
+            </aside>
+          </div>
         </section>
       </main>
     </div>
@@ -347,9 +440,17 @@
     <script src="swing-storage.js"></script>
     <script src="swing-game.js"></script>
     <script src="living-room-geometry.js"></script>
+    <script src="living-room-speech.js"></script>
     <script src="living-room-state.js"></script>
     <script src="living-room-storage.js"></script>
+    <script src="living-room-speech-view.js"></script>
+    <script src="living-room-companion-controls.js"></script>
     <script src="sofa-seated-trio.js"></script>
     <script src="living-room.js"></script>
+    <script src="wedding-room-state.js"></script>
+    <script src="wedding-room-storage.js"></script>
+    <script src="wedding-ceremony.js"></script>
+    <script src="wedding-interactions.js"></script>
+    <script src="wedding-room.js"></script>
   </body>
 </html>

@@ -81,7 +81,27 @@
     return [{ u: point.u + .17, v: point.v }, { u: point.u, v: point.v + .17 },
       { u: point.u - .17, v: point.v }, { u: point.u, v: point.v - .17 }].find(walkable);
   }
-  const api = { obstacles, seats, project, unproject, walkable, distance, clearSegment, findPath, beside };
+  function actorDepth(actor) {
+    let depth = Math.round(actor.screen.y);
+    if (actor.posture === "sitting") return depth;
+    const sofa = obstacles.find(obstacle => obstacle.name === "沙发");
+    if (actor.u >= sofa.u1 + .012) depth = Math.max(581, depth);
+    const table = obstacles.find(obstacle => obstacle.name === "茶几");
+    return actor.u >= table.u1 + .012 || actor.v >= table.v1 + .012 ? Math.max(705, depth) : depth;
+  }
+  function seatedPair(actors) {
+    const woman = actors.yueyue;
+    const man = actors.yan;
+    if (woman.posture !== "sitting" || man.posture !== "sitting" || Math.abs(woman.seat - man.seat) !== 1) return null;
+    return {
+      x: (woman.screen.x + man.screen.x) / 2 + 16,
+      y: (woman.screen.y + man.screen.y) / 2 - 8,
+      depth: Math.max(actorDepth(woman), actorDepth(man)),
+      // Keep the original down-left perspective against this fixed sofa.
+      mirrored: false
+    };
+  }
+  const api = { obstacles, seats, project, unproject, walkable, distance, clearSegment, findPath, beside, actorDepth, seatedPair };
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.LivingRoomGeometry = api;
 })(typeof window === "undefined" ? globalThis : window);

@@ -1,17 +1,21 @@
 (function (root) {
   "use strict";
   const geometry = typeof module === "object" && module.exports ? require("./living-room-geometry.js") : root.LivingRoomGeometry;
+  const Speech = typeof module === "object" && module.exports ? require("./living-room-speech.js") : root.LivingRoomSpeech;
   class Room {
     constructor(saved) {
       this.actors = {
         yueyue: { id: "yueyue", name: "月月", u: .66, v: .24, seat: null },
-        yan: { id: "yan", name: "哥哥", u: .64, v: .33, seat: null }
+        yan: { id: "yan", name: "哥哥", u: .64, v: .33, seat: null },
+        yu: { id: "yu", name: "屿", u: .38, v: .84, seat: null }
       };
       this.revision = 0;
       this.following = false;
       this.invitation = null;
       this.requests = [];
       this.events = [];
+      this.speech = new Speech();
+      this.speeches = { yan: this.speech, yu: new Speech("yu") };
       for (const actor of Object.values(this.actors)) {
         actor.path = [];
         actor.facing = "left";
@@ -31,7 +35,8 @@
     }
     snapshot() {
       return {
-        room: "living-room", revision: this.revision, following: this.following,
+        room: "living-room", revision: this.revision, following: this.following, speech: this.speech.snapshot(),
+        speeches: Object.fromEntries(Object.entries(this.speeches).map(([id, speech]) => [id, speech.snapshot()])),
         actors: Object.fromEntries(Object.entries(this.actors).map(([id, actor]) => [id, {
           id, name: actor.name, u: actor.u, v: actor.v, seat: actor.seat, facing: actor.facing,
           posture: actor.path.length ? "walking" : actor.seat === null ? "standing" : "sitting",
@@ -119,40 +124,48 @@
       this.requests = this.requests.slice(-8);
       this.record(action === "come" ? "月月邀请哥哥过来陪她。" : "月月邀请哥哥一起坐。 ");
     }
-    command(input, now = Date.now()) {
+    command(input, now = Date.now(), actorId = "yan") {
       if (!input || typeof input !== "object" || Array.isArray(input)) return { ok: false, error: "动作参数必须是对象。" };
-      if (input.actor !== undefined && input.actor !== "yan") return { ok: false, error: "哥哥的工具只能操作哥哥。" };
+      if (!["yan", "yu"].includes(actorId) || (input.actor !== undefined && input.actor !== actorId)) return { ok: false, error: "Each companion interface controls only its own character." };
       if (input.action === "observe") return { ok: true, state: this.snapshot() };
       if (input.revision !== undefined && input.revision !== this.revision) return { ok: false, error: "房间已变化，请重新观察。" };
       let result;
       switch (input.action) {
-        case "move": result = this.move("yan", { u: input.u, v: input.v }); break;
+        case "say":
+          result = this.speeches[actorId].say(input.text, now);
+          if (result.ok) this.record(`${this.actors[actorId].name}说了一句话。 `);
+          break;
+        case "move": result = this.move(actorId, { u: input.u, v: input.v }); break;
         case "come": {
           const target = geometry.beside(this.actors.yueyue);
-          result = target ? this.move("yan", target) : { ok: false, error: "月月旁边没有空处。" };
+          result = target ? this.move(actorId, target) : { ok: false, error: "月月旁边没有空处。" };
           break;
         }
-        case "sit": result = this.sit("yan", input.seat); break;
-        case "stand": result = this.stand("yan"); break;
+        case "sit": result = this.sit(actorId, input.seat); break;
+        case "stand": result = this.stand(actorId); break;
         case "face": {
-          this.actors.yan.facing = geometry.project(this.actors.yueyue).x < geometry.project(this.actors.yan).x ? "left" : "right";
-          this.record("哥哥转向月月。 "); result = { ok: true, status: "completed" }; break;
+          this.actors[actorId].facing = geometry.project(this.actors.yueyue).x < geometry.project(this.actors[actorId]).x ? "left" : "right";
+          this.record(`${this.actors[actorId].name}转向月月。 `); result = { ok: true, status: "completed" }; break;
         }
         case "invite_follow": {
+          if (actorId !== "yan") return { ok: false, error: "Follow invitations are not available for Yu yet." };
           if (this.invitation || this.following) return { ok: false, error: "已经有邀请或正在一起走。" };
           this.invitation = { id: `follow-${this.revision + 1}`, expiresAt: now + 120000 };
           this.record("哥哥邀请月月跟着一起玩。 ");
           result = { ok: true, status: "awaiting_user", requestId: this.invitation.id }; break;
         }
-        case "stop_follow": this.stopFollow(); result = { ok: true, status: "completed" }; break;
-        default: return { ok: false, error: "未知动作；可用observe/move/come/sit/stand/face/invite_follow/stop_follow。" };
+        case "stop_follow":
+          if (actorId !== "yan") return { ok: false, error: "Yu cannot change Yan’s follow invitation." };
+          this.stopFollow(); result = { ok: true, status: "completed" }; break;
+        default: return { ok: false, error: "未知动作；可用observe/move/come/sit/stand/face/invite_follow/stop_follow/say。" };
       }
-      if (result.ok && ["come", "sit"].includes(input.action)) {
+      if (actorId === "yan" && result.ok && ["come", "sit"].includes(input.action)) {
         this.requests.filter(item => item.action === input.action).forEach(item => { item.status = "handled"; });
       }
       return { ...result, state: this.snapshot() };
     }
     advance(seconds, now = Date.now()) {
+      for (const speech of Object.values(this.speeches)) { if (speech.expire(now)) this.revision++; }
       if (this.invitation && now >= this.invitation.expiresAt) { this.invitation = null; this.record("邀请到时间了，月月继续自己玩。 "); }
       for (const actor of Object.values(this.actors)) {
         if (!actor.path.length) continue;
