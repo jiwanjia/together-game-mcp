@@ -23,6 +23,10 @@
 .room-actor[data-frame='2'] .room-sprite { background-position: 100% 0%; }
 .room-actor[data-facing='right']:not([data-frame='2']) .room-sprite { transform: scaleX(-1); }
 .room-actor[data-walking='true'] .room-sprite { animation: room-step .36s ease-in-out infinite; }
+.room-seated-trio { position: absolute; height: auto; transform: translate(-50%, -97%); pointer-events: none; user-select: none; }
+.room-actor[data-trio='true'] { width: 8%; aspect-ratio: 1 / 2.2; }
+.room-actor[data-trio='true'] .room-sprite { visibility: hidden; }
+.room-actor[data-trio='true'] .room-name { padding: 1px 3px; font-size: clamp(7px, .9vw, 11px); }
 .room-name { position: absolute; bottom: -13px; left: 50%; transform: translateX(-50%); padding: 2px 7px; border-radius: 8px; background: #fff8e9d9; color: #896852; font-size: clamp(9px, 1vw, 12px); white-space: nowrap; }
 .room-destination { position: absolute; z-index: 3; transform: translate(-50%, -50%); color: #c59665; font-size: 28px; pointer-events: none; }
 .room-notes { padding: 24px 20px; border: 1px solid #dfccae; border-radius: 8px 24px 10px 24px; background: #fff9eecb; box-shadow: 4px 7px 0 #d9c1a11a; }

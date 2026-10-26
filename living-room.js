@@ -20,6 +20,7 @@
       element.dataset.frame = actor.posture === "sitting" ? "2" : actor.posture === "walking" ? String(Math.floor(performance.now() / 190) % 2) : "0";
       document.querySelector(`#room-${id}-status`).textContent = actor.seat !== null && actor.posture !== "walking" ? `${geometry.seats[actor.seat].name} · 坐着` : labels[actor.posture];
     }
+    if (active) window.SofaSeatedTrio.render(state.actors);
     document.querySelector("#room-stop-follow").hidden = !state.following;
     document.querySelector("#room-stand").hidden = state.actors.yueyue.posture !== "sitting";
     if (state.revision !== renderedRevision) {

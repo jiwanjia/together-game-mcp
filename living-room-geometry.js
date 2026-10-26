@@ -11,7 +11,8 @@
     id: index, name: ["左座", "中座", "右座"][index],
     approach: { u: .29, v },
     // The sofa cushions rise above the floor and recede along the right wall.
-    foot: { u: .20 - (index + 1) / 28 + 1 / 95, v: v - (index + 1) / 28 - 1 / 95 }
+    foot: { u: .20 - (index + 1) / 28 + 1 / 95,
+      v: v - (index + 1) / 28 - 1 / 95 - (index === 2 ? .045 : 0) }
   }));
   function project({ u, v }) { return { x: 500 + (v - u) * 475, y: 370 + (u + v) * 280 }; }
   function unproject({ x, y }) {

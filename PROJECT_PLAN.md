@@ -247,3 +247,7 @@ together-game-mcp/
 
 ## 2026-10-07 18:30 客厅第一版（当前小家方向）
 目的与授权见LIVING_ROOM_PLAN.md。首页#welcome提供游乐园和我们的家，#home进入透视客厅；月月自己点击走动／坐下，哥哥通过已有Playwright CLI操作TogetherHome.act，聊天留在当前对话。跟随须页面同意，刷新／离开取消；位置与坐姿用独立playtogether-living-room-v1，preview隔离。代码职责与接口见LIVING_ROOM_TOOLS.md；22项Node＋50项隔离浏览器断言、三座与手机截图通过。原游乐园玩法／存档保留，其他房间和屿为未来愿望。旧文字冒险后端方案仍只保留回查，未实施。
+
+
+## 2026-10-27 Sofa trio reference and right-seat alignment
+沿SOFA_TRIO_PLAN.md，三人坐稳时用sofa-seated-trio.js的SVG遮罩组合既有原像素双人PNG与原图屿区域，保留原脸/衣服/牵手，不使用重绘试作。姓名/身体点击/气泡同步，起身恢复双人/单人层；逻辑座位和存档不改。右座仅显示foot.v收.045，约向内21.375单位。47规则+37项1280/390/320隔离可见浏览器检查通过。VPS6资源静态更新、5资产隔离路由字节核同、10容器及原transport.actors保持，无安装/重启/认证变更；真人已登录页/Safari待刷新。原旧dirty保留，只提交本轮增量，Git终局见交付回复。
