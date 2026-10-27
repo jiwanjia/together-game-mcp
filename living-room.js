@@ -10,7 +10,7 @@
       if (room.speech.clear()) room.revision++;
       display();
     });
-  const bedroomSpeechView = new window.LivingRoomSpeechView(document.querySelector(".bedroom-scene"),
+  const bedroomSpeechView = window.BedroomHome ? null : new window.LivingRoomSpeechView(document.querySelector(".bedroom-scene"),
     document.querySelector("#bedroom-speech"), document.querySelector("#bedroom-yan-anchor"), () => {
       if (room.speech.clear()) room.revision++;
       display();
@@ -54,7 +54,7 @@
     readingArt.render(state, active);
     reading.render(state, active);
     speechView.render(active ? state.speech : null);
-    bedroomSpeechView.render(view === "bedroom" ? state.speech : null);
+    bedroomSpeechView?.render(view === "bedroom" ? state.speech : null);
     companion.render(active);
     document.querySelector("#room-stop-follow").hidden = !state.following;
     document.querySelector("#room-stand").hidden = state.actors.yueyue.posture !== "sitting";
@@ -172,12 +172,20 @@
   // A semantic game tool, called through the existing browser tooling in this same tab.
   window.TogetherHome = Object.freeze({
     act(input) {
+      if (view === "bedroom" && window.BedroomHome) return window.BedroomHome.act(input, "yan");
       const bedroomSay = view === "bedroom" && input?.action === "say";
       if (input?.action !== "observe" && (document.hidden || (!active && !bedroomSay))) return { ok: false, error: "请先打开可见的客厅；卧室目前只能说话。" };
       const result = room.command(input); resultMessage(result); wake(); return result;
     },
-    observe() { return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say", "read_aloud", "invite_read", "accept_read", "decline_read", "read_line", "end_read"] }; }
+    observe() {
+      if (view === "bedroom" && window.BedroomHome) return window.BedroomHome.observe("yan");
+      return { ...room.snapshot(), view, active, visible: !document.hidden, coordinates: "u/v: 0..1等距地面坐标（客厅）", actions: view === "bedroom" ? ["observe", "say"] : ["observe", "move", "come", "sit", "stand", "face", "invite_follow", "stop_follow", "say", "read_aloud", "invite_read", "accept_read", "decline_read", "read_line", "end_read"] };
+    }
   });
-  window.TogetherYu = companion.interface(() => window.TogetherHome.observe());
+  const localYu = companion.interface(() => window.TogetherHome.observe());
+  window.TogetherYu = Object.freeze({
+    observe: () => view === "bedroom" && window.BedroomHome ? window.BedroomHome.observe("yu") : localYu.observe(),
+    act: input => view === "bedroom" && window.BedroomHome ? window.BedroomHome.act(input, "yu") : localYu.act(input)
+  });
   display();
 })();

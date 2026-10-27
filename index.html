@@ -356,15 +356,12 @@
           <div class="game-heading room-heading">
             <button id="bedroom-back" class="text-button" type="button">← 返回客厅</button>
             <div><p class="eyebrow">Our home · Bedroom</p><h1 id="bedroom-title">玫瑰开着，我们窝在一起。</h1></div>
-            <span class="room-presence">月月 & 哥哥</span>
+            <span class="room-presence">Yueyue &amp; Yan &amp; Yu</span>
           </div>
           <div class="room-layout">
             <div class="room-picture">
-          <div class="room-scene bedroom-scene" role="group" aria-label="玫瑰围绕的普通转角窗卧室，月月靠在哥哥怀里，两人窝在奶油樱桃被子中">
+          <div id="bedroom-floor" class="room-scene bedroom-scene" tabindex="0" role="group" aria-label="Bedroom. Click clear floor to walk, or choose the bed to rest together.">
                 <img class="room-background" src="assets/bedroom/rose-corner-window-room-v1.png" alt="" aria-hidden="true" draggable="false" />
-                <img class="bedroom-cuddle" src="assets/bedroom/yueyue-yan-cuddle-preview.png" alt="" aria-hidden="true" draggable="false" />
-            <div class="bedroom-quilt-front" aria-hidden="true"></div>
-            <span id="bedroom-yan-anchor" class="bedroom-yan-anchor" aria-hidden="true"></span>
             <div id="bedroom-speech" class="room-speech" hidden>
               <div class="room-speech-heading"><span>哥哥</span><button type="button" aria-label="收起哥哥的气泡">×</button></div>
               <p class="room-speech-text" role="status" aria-live="polite"></p>
@@ -450,6 +447,9 @@
     <script src="sofa-seated-trio.js"></script>
     <script src="reading-view.js"></script>
     <script src="reading-art.js"></script>
+    <script src="bedroom-geometry.js"></script>
+    <script src="bedroom-state.js"></script>
+    <script src="bedroom.js"></script>
     <script src="living-room.js"></script>
     <script src="wedding-room-state.js"></script>
     <script src="wedding-room-storage.js"></script>

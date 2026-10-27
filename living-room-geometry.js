@@ -27,26 +27,26 @@
       point.v > box.v0 - .012 && point.v < box.v1 + .012);
   }
   function distance(a, b) { return Math.hypot(a.u - b.u, a.v - b.v); }
-  function clearSegment(a, b) {
+  function clearSegment(a, b, canWalk = walkable) {
     const samples = Math.ceil(distance(a, b) / .008);
     for (let step = 0; step <= samples; step++) {
       const ratio = samples ? step / samples : 0;
-      if (!walkable({ u: a.u + (b.u - a.u) * ratio, v: a.v + (b.v - a.v) * ratio })) return false;
+      if (!canWalk({ u: a.u + (b.u - a.u) * ratio, v: a.v + (b.v - a.v) * ratio })) return false;
     }
     return true;
   }
   // Search a small floor grid, then remove corners with a clear line of travel.
-  function findPath(start, target) {
-    if (!walkable(start) || !walkable(target)) return null;
-    if (clearSegment(start, target)) return [{ ...target }];
+  function findPath(start, target, canWalk = walkable) {
+    if (!canWalk(start) || !canWalk(target)) return null;
+    if (clearSegment(start, target, canWalk)) return [{ ...target }];
     const grid = [];
     for (let u = 3; u <= 37; u++) {
       for (let v = 3; v <= 37; v++) {
         const point = { u: u / 40, v: v / 40 };
-        if (walkable(point)) grid.push({ ...point, key: `${u},${v}`, gu: u, gv: v });
+        if (canWalk(point)) grid.push({ ...point, key: `${u},${v}`, gu: u, gv: v });
       }
     }
-    const nearest = grid.filter(point => clearSegment(start, point))
+    const nearest = grid.filter(point => clearSegment(start, point, canWalk))
       .sort((a, b) => distance(start, a) - distance(start, b))[0];
     if (!nearest) return null;
     const nodes = new Map(grid.map(point => [point.key, point]));
@@ -55,10 +55,10 @@
     let end = null;
     for (let cursor = 0; cursor < queue.length; cursor++) {
       const current = queue[cursor];
-      if (clearSegment(current, target)) { end = current; break; }
+      if (clearSegment(current, target, canWalk)) { end = current; break; }
       for (const [du, dv] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
         const next = nodes.get(`${current.gu + du},${current.gv + dv}`);
-        if (!next || previous.has(next.key) || !clearSegment(current, next)) continue;
+        if (!next || previous.has(next.key) || !clearSegment(current, next, canWalk)) continue;
         previous.set(next.key, current.key);
         queue.push(next);
       }
@@ -70,7 +70,7 @@
     let anchor = start;
     for (let index = 0; index < corners.length;) {
       let next = corners.length - 1;
-      while (next > index && !clearSegment(anchor, corners[next])) next--;
+      while (next > index && !clearSegment(anchor, corners[next], canWalk)) next--;
       path.push({ u: corners[next].u, v: corners[next].v });
       anchor = corners[next];
       index = next + 1;

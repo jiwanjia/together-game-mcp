@@ -263,3 +263,9 @@ together-game-mcp/
 - 书柜与沙发共用#room-menu下方面板和room-furniture-hotspot提示，不再新增阅读dialog或代码小书。Invite月月→小机先等待绑定目标accept_read/decline_read，Ask立即安排；小机→月月仍只由可信页面接受。
 - 改为站位/原寻路，加入可用备选阅读站位，连续换人不挤走其他人且避免PNG重叠；走开/离开/刷新取消。月月自己的读书短句有独立气泡，小机不能代发。无TTS/模型调用。
 - 64规则测试、61项1280/390/320可见浏览器检查通过，0页面异常，真实localStorage不变。检查中发现连续切换后的重叠并修正；一轮截图热点被站在前面的角色遮挡，改点书架上沿；测试初始化受旧pagehide存档覆盖，改为一次性隔离夹具。旧原图、卧室预览保持，VPS未更新。
+
+
+## 2026-10-27 Bedroom walking and resting
+- 本地#bedroom已接三人走动与同款下方菜单；点床→Rest together直接安排全员到齐后显示已确认原图，不做单人躺下。
+- 任一人走动/起身恢复全体；独立位置key playtogether-bedroom-v1。bedroom-geometry/state/view分别负责地板/规则/显示，同页TogetherHome与TogetherYu按卧室路由控制自己。
+- 58项Node与25项隔离Chrome检查通过，三尺寸原图位置/无横向溢出、气泡/刷新/存档隔离已核。仅本地，不代表VPS共享后端上线。范围BEDROOM_PLAY_PLAN.md，原dirty保留。

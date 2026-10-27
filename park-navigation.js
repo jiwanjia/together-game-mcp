@@ -2,7 +2,7 @@ window.ParkNavigation = (function () {
   const views = { welcome: document.querySelector("#welcome-view"), park: document.querySelector("#park-view"),
     home: document.querySelector("#living-room-view"), bedroom: document.querySelector("#bedroom-view"), wedding: document.querySelector("#wedding-view"),
     "claw-machine": document.querySelector("#claw-view"), swing: document.querySelector("#swing-view") };
-  const focus = { welcome: "#enter-home", home: "#room-floor", bedroom: "#bedroom-back", wedding: "#wedding-floor", park: "#enter-claw-machine", "claw-machine": "#aim-position", swing: "#push-swing" };
+  const focus = { welcome: "#enter-home", home: "#room-floor", bedroom: "#bedroom-floor", wedding: "#wedding-floor", park: "#enter-claw-machine", "claw-machine": "#aim-position", swing: "#push-swing" };
   function show(name, moveFocus = true) {
     const selected = Object.hasOwn(views, name) ? name : "welcome";
     Object.entries(views).forEach(([key, view]) => { view.hidden = key !== selected; });
