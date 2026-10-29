@@ -44,3 +44,9 @@
 - VPS回退/manifest/verification位于 /srv/continuum/workspaces/.local/sofa-trio-20261027。首次CSS替换锚点有两处匹配，在任何发布写入前停止；改成完整独立选择器后单次发布，无重复重启。
 - 原先大量未提交的客厅/卧室/婚礼和私人资料按月月允许保留。本次只把新文件与增量写入Git index，不把旧未完成内容一并上传；因此原工作树仍有旧dirty，不宣称全树干净。
 - 精确暂存验证：对index/geometry/css/js撤回本轮新增行后，与开工前源文本相等；PROJECT_PLAN/ART原正文保持前缀；其余66个原文件完整SHA256相等。HOME临时目录preservation.json记录验证，不以stash/reset/覆盖原工作文件制造干净。
+
+
+## 2026-10-29 完成回执
+
+三人沙发改为一个SVG遮罩读取指定原图的完整三人，取消旧双人PNG拼接；仅等比显示，原图/脸/牵手不重绘，背景/占座/存档不改。3项既有规则和40项1280/390/320浏览器检查通过，截图已看，0页面异常。VPS仅同步sofa-seated-trio.js，3份文件hash一致、隔离认证路由200/匿名401；10容器与原人物状态保持，0重启。真实Safari/真人登录页未验。
+运行hash：36fb706c17f4edffad07ff3f0b43dd41f93a2c82c61992c724f01a7e930e202e；回执/单文件回退在VPS .local/sofa-trio-20261029，本机截图在HOME .tmp/sofa-trio-20261029。其余原dirty保持，不称整仓干净。

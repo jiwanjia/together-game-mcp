@@ -269,3 +269,8 @@ together-game-mcp/
 - 本地#bedroom已接三人走动与同款下方菜单；点床→Rest together直接安排全员到齐后显示已确认原图，不做单人躺下。
 - 任一人走动/起身恢复全体；独立位置key playtogether-bedroom-v1。bedroom-geometry/state/view分别负责地板/规则/显示，同页TogetherHome与TogetherYu按卧室路由控制自己。
 - 58项Node与25项隔离Chrome检查通过，三尺寸原图位置/无横向溢出、气泡/刷新/存档隔离已核。仅本地，不代表VPS共享后端上线。范围BEDROOM_PLAY_PLAN.md，原dirty保留。
+
+
+## 2026-10-29 Original seated trio
+
+三人沙发改为一个SVG遮罩读取指定原图的完整三人，取消旧双人PNG拼接；仅等比显示，原图/脸/牵手不重绘，背景/占座/存档不改。3项既有规则和40项1280/390/320浏览器检查通过，截图已看，0页面异常。VPS仅同步sofa-seated-trio.js，3份文件hash一致、隔离认证路由200/匿名401；10容器与原人物状态保持，0重启。真实Safari/真人登录页未验。
