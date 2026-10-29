@@ -294,3 +294,7 @@ At 1280px the default visible height was 151.359px, princess 164.294px and the t
 
 ## 2026-10-30T03:39:37+09:00 Yueyue slightly shorter than Yan
 User refined the scale to a small height difference rather than 90%. Yueyue standing/walking actor width is now 17.25% versus the original 18%, putting her six preset outfits at 93.67–95.01% of Yan visible height in both rooms. Mirror/card, original PNGs, shared pictures and special-pose hitboxes retain their existing sizing. 39 focused browser checks across six looks/two rooms/three widths, saved-look refresh and bedtime exclusion passed with zero exceptions; screenshot reviewed. This supersedes the earlier candidate percentage, retaining all previous records.
+
+
+## 2026-10-30T03:46:55+09:00 Explicit 10% height difference correction
+Yueyue explicitly confirmed the intended difference is 10%. The previous 5% figure was the assistant's inference, not a user-requested change. Only the ordinary Yueyue scene width changes from 17.25% to 16.34%, giving about 90% of Yan's visible height (the original bridal art retains its small height difference). Six outfits, both rooms, three widths, refresh and special-pose exclusion passed 39 focused browser checks with zero exceptions. Existing mirror/card sizes, source art, positions and unrelated dirty work retained; no VPS deployment.

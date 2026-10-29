@@ -51,7 +51,7 @@
 .vanity-import-actions .vanity-primary { width: auto; font-size: 14px; }
 .wardrobe-art { position: absolute; inset: -15% -8% 0; width: 116%; height: 115%; overflow: hidden; pointer-events: none; filter: drop-shadow(0 3px 1px #8a674920); }
 .wardrobe-art--scene-sized { inset: 0; width: 100%; height: 100%; }
-.room-actor--yueyue:not([data-frame='2']):not([data-sleeping='true']):not([data-paired='true']):not([data-trio='true']):not([data-reading='solo']):not([data-reading='pair']) { width: 17.25%; }
+.room-actor--yueyue:not([data-frame='2']):not([data-sleeping='true']):not([data-paired='true']):not([data-trio='true']):not([data-reading='solo']):not([data-reading='pair']) { width: 16.34%; }
 .room-actor[data-custom-look='true']:not([data-frame='2']) .room-sprite { visibility: hidden; }
 .room-actor[data-facing='right'] > .wardrobe-art { transform: scaleX(-1); }
 .room-actor[data-sleeping='true'] > .wardrobe-art, .room-actor[data-paired='true'] > .wardrobe-art, .room-actor[data-trio='true'] > .wardrobe-art, .room-actor[data-frame='2'] > .wardrobe-art, .room-actor[data-reading='solo'] > .wardrobe-art, .room-actor[data-reading='pair'] > .wardrobe-art { display: none; }
