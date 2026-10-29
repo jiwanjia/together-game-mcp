@@ -92,3 +92,69 @@ test("restore only valid floor positions, never sleep, paths or speeches", () =>
   assert.equal(room.resting, false);
   assert.equal(room.settling, false);
 });
+
+for (const id of ["yan", "yu"]) {
+  test(`inviting ${id} waits without moving anyone; only that companion can accept`, () => {
+    const room = new Bedroom();
+    const before = room.positions();
+    const result = room.rest.invite(id);
+    assert.deepEqual(room.positions(), before);
+    assert.equal(room.settling, false);
+    const other = id === "yan" ? "yu" : "yan";
+    assert.equal(room.command({ action: "accept_rest", requestId: result.requestId }, other).ok, false);
+    assert.ok(room.command({ action: "accept_rest", requestId: result.requestId }, id).ok);
+    assert.equal(room.resting, false);
+    finish(room);
+    assert.equal(room.resting, true);
+    assert.deepEqual(room.snapshot().rest.participants, ["yueyue", id]);
+    assert.equal(room.snapshot().actors[other].posture, "standing");
+    assert.deepEqual(room.positions()[other], before[other]);
+  });
+  test(`${id} can decline and old responses cannot answer a later invitation`, () => {
+    const room = new Bedroom();
+    const before = room.positions();
+    const first = room.rest.invite(id);
+    assert.ok(room.command({ action: "decline_rest", requestId: first.requestId }, id).ok);
+    assert.deepEqual(room.positions(), before);
+    const second = room.rest.invite(id);
+    assert.notEqual(first.requestId, second.requestId);
+    assert.equal(room.command({ action: "accept_rest", requestId: first.requestId }, id).ok, false);
+    assert.equal(room.rest.invitation.id, second.requestId);
+  });
+}
+
+test("pair rest allows the outsider to walk without waking the couple", () => {
+  const room = new Bedroom();
+  const request = room.rest.invite("yan");
+  room.command({ action: "accept_rest", requestId: request.requestId });
+  finish(room);
+  assert.ok(room.move("yu", { u: .6, v: .8 }).ok);
+  finish(room);
+  assert.equal(room.resting, true);
+  assert.equal(room.snapshot().actors.yan.posture, "sleeping");
+  assert.equal(room.command({ action: "wake" }, "yu").ok, false);
+  room.stand("yan");
+  assert.equal(room.resting, false);
+});
+
+test("expired, cancelled, paused or interrupted invitations cannot start rest", () => {
+  for (const cancel of [room => room.advance(0, 120001), room => room.wake(), room => room.pause(), room => room.stand("yan")]) {
+    const room = new Bedroom();
+    const request = room.rest.invite("yan", 0);
+    cancel(room);
+    assert.equal(room.command({ action: "accept_rest", requestId: request.requestId }, "yan", 120001).ok, false);
+    assert.equal(room.resting, false);
+    assert.equal(room.settling, false);
+  }
+});
+
+test("accepted pairs wait only for participants, and snapshots cannot rewrite membership", () => {
+  const room = new Bedroom();
+  const request = room.rest.invite("yu");
+  room.command({ action: "accept_rest", requestId: request.requestId }, "yu");
+  room.snapshot().rest.participants.push("yan");
+  assert.deepEqual(room.rest.participants, ["yueyue", "yu"]);
+  const restored = new Bedroom(room.positions());
+  assert.deepEqual(restored.rest.participants, []);
+  assert.equal(restored.rest.invitation, null);
+});

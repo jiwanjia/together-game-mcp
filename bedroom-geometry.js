@@ -7,6 +7,7 @@
   ];
   const bedside = { yan: { u: .78, v: .49 }, yueyue: { u: .55, v: .49 }, yu: { u: .32, v: .49 } };
   const heads = { yan: { x: 204, y: 456 }, yueyue: { x: 263, y: 423 }, yu: { x: 330, y: 388 } };
+  const pairHeads = { yueyue: { x: 220, y: 430 }, companion: { x: 260, y: 375 } };
   function project({ u, v }) { return { x: 500 + (v - u) * 480, y: 360 + (u + v) * 300 }; }
   function unproject({ x, y }) {
     const sum = (y - 360) / 300;
@@ -23,7 +24,7 @@
     return [{ u: point.u + .18, v: point.v }, { u: point.u, v: point.v + .18 },
       { u: point.u - .18, v: point.v }, { u: point.u, v: point.v - .18 }].find(walkable);
   }
-  const api = { project, unproject, walkable, beside, bedside, heads, furniture,
+  const api = { project, unproject, walkable, beside, bedside, heads, pairHeads, furniture,
     distance: floor.distance, findPath: (start, target) => floor.findPath(start, target, walkable) };
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.BedroomGeometry = api;

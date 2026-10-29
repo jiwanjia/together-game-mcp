@@ -2,11 +2,13 @@
   "use strict";
   const geometry = typeof module === "object" && module.exports ? require("./bedroom-geometry.js") : root.BedroomGeometry;
   const Speech = typeof module === "object" && module.exports ? require("./living-room-speech.js") : root.LivingRoomSpeech;
+  const Rest = typeof module === "object" && module.exports ? require("./bedroom-rest.js") : root.BedroomRest;
   class Bedroom {
     constructor(saved) {
       this.revision = 0;
       this.resting = false;
       this.settling = false;
+      this.rest = new Rest(this);
       this.actors = {
         yueyue: { id: "yueyue", u: .58, v: .58 },
         yan: { id: "yan", u: .88, v: .73 },
@@ -22,11 +24,12 @@
     snapshot() {
       return {
         room: "bedroom", revision: this.revision, resting: this.resting, settling: this.settling,
+        rest: this.rest.snapshot(),
         actors: Object.fromEntries(Object.entries(this.actors).map(([id, actor]) => [id, {
           id, u: actor.u, v: actor.v, facing: actor.facing,
-          posture: this.resting ? "sleeping" : actor.path.length ? "walking" : "standing",
+          posture: this.resting && this.rest.participants.includes(id) ? "sleeping" : actor.path.length ? "walking" : "standing",
           target: actor.path.at(-1) ? { ...actor.path.at(-1) } : null,
-          screen: this.resting ? { ...geometry.heads[id] } : geometry.project(actor)
+          screen: this.resting && this.rest.participants.includes(id) ? { ...(this.rest.participants.length === 3 ? geometry.heads[id] : geometry.pairHeads[id === "yueyue" ? "yueyue" : "companion"]) } : geometry.project(actor)
         }])),
         speeches: Object.fromEntries(Object.entries(this.speeches).map(([id, speech]) => [id, speech.snapshot()]))
       };
@@ -35,10 +38,10 @@
       return Object.fromEntries(Object.entries(this.actors).map(([id, actor]) => [id, { u: actor.u, v: actor.v }]));
     }
     wake() {
-      if (!this.resting && !this.settling) return { ok: true, status: "standing" };
+      if (!this.resting && !this.settling && !this.rest.invitation) return { ok: true, status: "standing" };
       this.resting = false;
       this.settling = false;
-      for (const actor of Object.values(this.actors)) actor.path = [];
+      this.rest.clear();
       this.revision++;
       return { ok: true, status: "awake" };
     }
@@ -46,28 +49,23 @@
       if (!this.actors[id]) return { ok: false, error: "Choose a known resident." };
       const path = geometry.findPath(this.actors[id], target);
       if (!path) return { ok: false, error: "Choose a clear spot on the bedroom floor." };
-      this.wake();
+      this.rest.interrupt(id);
       this.actors[id].path = path;
       this.revision++;
       return { ok: true, status: "started" };
     }
     stand(id) {
       if (!this.actors[id]) return { ok: false, error: "Choose a known resident." };
-      this.wake();
+      this.rest.interrupt(id);
       this.actors[id].path = [];
       this.revision++;
       return { ok: true, status: "standing" };
     }
     restTogether() {
-      const routes = Object.entries(this.actors).map(([id, actor]) => [id, geometry.findPath(actor, geometry.bedside[id])]);
-      if (routes.some(([, path]) => !path)) return { ok: false, error: "Everyone needs a clear route to the bed." };
-      this.wake();
-      for (const [id, path] of routes) this.actors[id].path = path;
-      this.settling = true;
-      this.revision++;
-      return { ok: true, status: "started" };
+      return this.rest.begin(Object.keys(this.actors));
     }
     advance(seconds, now = Date.now()) {
+      this.rest.expire(now);
       for (const speech of Object.values(this.speeches)) if (speech.expire(now)) this.revision++;
       for (const actor of Object.values(this.actors)) {
         let remaining = Math.max(0, Math.min(seconds, .1)) * .28;
@@ -87,19 +85,19 @@
           }
         }
       }
-      if (this.settling && Object.values(this.actors).every(actor => !actor.path.length)) {
+      if (this.settling && this.rest.participants.every(id => !this.actors[id].path.length)) {
         this.settling = false;
         this.resting = true;
         this.revision++;
       }
     }
     pause() {
-      if (this.settling) this.wake();
+      if (this.settling || this.rest.invitation) this.wake();
       for (const actor of Object.values(this.actors)) actor.path = [];
       for (const speech of Object.values(this.speeches)) speech.clear();
       this.revision++;
     }
-    command(input, actorId = "yan") {
+    command(input, actorId = "yan", now = Date.now()) {
       if (!input || typeof input !== "object" || Array.isArray(input)) return { ok: false, error: "An action object is required." };
       if (!["yan", "yu"].includes(actorId) || (input.actor !== undefined && input.actor !== actorId)) return { ok: false, error: "Use your own character’s interface." };
       if (input.action === "observe") return { ok: true, state: this.snapshot() };
@@ -113,14 +111,16 @@
           break;
         }
         case "stand": result = this.stand(actorId); break;
-        case "wake": result = this.wake(); break;
+        case "wake": result = this.rest.participants.includes(actorId) ? this.wake() : { ok: false, error: "You are already up." }; break;
+        case "accept_rest": result = this.rest.respond(actorId, input.requestId, true, now); break;
+        case "decline_rest": result = this.rest.respond(actorId, input.requestId, false, now); break;
         case "say": result = this.speeches[actorId].say(input.text); if (result.ok) this.revision++; break;
         case "face":
           this.actors[actorId].facing = geometry.project(this.actors.yueyue).x < geometry.project(this.actors[actorId]).x ? "left" : "right";
           this.revision++;
           result = { ok: true, status: "completed" };
           break;
-        default: return { ok: false, error: "Use observe, move, come, stand, wake, face, or say." };
+        default: return { ok: false, error: "Use observe, move, come, stand, wake, face, say, accept_rest, or decline_rest." };
       }
       return { ...result, state: this.snapshot() };
     }

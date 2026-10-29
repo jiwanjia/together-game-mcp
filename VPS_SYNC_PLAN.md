@@ -1,5 +1,12 @@
 把最近已提交并验收的 PlayTogether 书柜、卧室三人走动/休息、三人衣柜及10%身高修正同步部署到现有 VPS 私人小屋。
 
+## 2026-10-30 月月纠正后的补同步范围
+- 月月指出卧室双人邀请已完成；本机确有完整现成流程及两份配图。此前以未提交及旧验收状态将它排除，是本轮发布范围判断遗漏，不把现成实现说成尚未编写。
+- 沿原部署请求补验并发布现有bedroom-rest.js、bedroom-art.js、bedroom-state.js及既有邀请测试、bedroom-geometry.js的pairHeads、bedroom.js、index.html两处脚本登记、两张双人实际游戏PNG；只接纳这些可由原BEDROOM_PAIR_PLAN核归属的现成内容。
+- 不带入无关styles/living-room/bedroom轮廓与布局改动，不重绘图片、不替角色自动接受。保留三人Rest together及三人衣柜/身高修正。
+- 验证真实页面Invite Yan/Yu等待不移动、目标自己接受/拒绝、错误角色拒绝、双人图与旁观者、取消/旧请求/刷新、三人回归、衣柜入口和1280/390/320；通过后精确Git提交push原main并仅补发布差异，核对原容器/人物状态及认证保护。
+- 这次补同步复用现有卧室单页状态和原TogetherHome/TogetherYu接口；不暗建跨浏览器共享卧室或扩展Hub工具。最终如实说明邀请是否可从当前聊天工具接收。
+
 - 授权来源：2026-10-30 月月请求同步/部署最近 PlayTogether 改动。
 - 唯一游戏源码 D:/together-game-mcp/main；以2567234及本次必要兼容提交导出白名单，不读取未提交的旧双人休息/布局草稿作为发布源。旧dirty/私人参考原位保持。
 - VPS沿原/srv/continuum/workspaces/.local/playtogether-release及原Flask容器/app/playtogether覆盖层，原登录/权限/端口/镜像/挂载保持，不安装、不删除、不新建服务。
