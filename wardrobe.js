@@ -36,14 +36,19 @@
         element.dataset.customLook = String(selected !== catalog.defaultId(actor));
         if (selected !== catalog.defaultId(actor)) {
           const look = looks(actor).find(look => look.id === selected);
-          element.append(sprite(look, "wardrobe-art", selected.startsWith("custom-"), actor));
+          const sceneSized = actor === "yueyue" && selected !== "bridal";
+          const original = catalog.looks(actor)[0];
+          // Match the original pajamas' square scene frame, including its -6% centering shift.
+          const reference = sceneSized ? { ...original, body: { ...original.body, x: original.body.x - original.cellWidth * .06 } } : catalog.reference;
+          const className = sceneSized ? "wardrobe-art wardrobe-art--scene-sized" : "wardrobe-art";
+          element.append(sprite(look, className, sceneSized || selected.startsWith("custom-"), actor, reference));
         }
       }
     }
   }
-  function sprite(lookOrId, className = "", normalize = false, actor = "yueyue") {
+  function sprite(lookOrId, className = "", normalize = false, actor = "yueyue", reference = catalog.reference) {
     const look = typeof lookOrId === "string" ? looks(actor).find(item => item.id === lookOrId) : lookOrId;
-    const frame = normalize ? catalog.reference : look;
+    const frame = normalize ? reference : look;
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
     svg.setAttribute("viewBox", "0 0 " + frame.cellWidth + " " + frame.cellHeight);

@@ -285,3 +285,8 @@ together-game-mcp/
 
 
 2026-10-30T03:26:10+09:00 Exact staged candidate: 10 additional browser checks passed using the staged index and original bedroom/layout files, proving the wardrobe entry works without unfinished pair-rest modules. Total browser checks 93, related Node checks 54; zero candidate page exceptions. CLI route.fetch could not reach the loopback service although its original listener was alive; fetching the same static candidate files through browser fetch and fulfilling them in the isolated test resolved the test-tool path only, without service changes.
+
+
+## 2026-10-30T03:37:26+09:00 Wardrobe scene scale correction
+Yueyue's princess and burgundy/black/pink-haired presets now match Cherry mornings' visible standing height, foot baseline and horizontal alignment in both rooms, using the original square scene frame instead of filling the enlarged portrait overlay. Original pajamas and bridal rendering remain unchanged; mirror/card reference and source PNGs are unchanged. Yueyue imports use the same scene reference with their existing full-image width fit; Yan/Yu art is unchanged.
+At 1280px the default visible height was 151.359px, princess 164.294px and the three hair presets 174.579px. Corrected four presets are 151.359px with the same foot baseline. 73 focused browser checks passed across six outfits, living room/bedroom and 1280/390/320 widths, save/reload, static walking and shared-picture hiding; zero page exceptions. Screenshots reviewed. Only wardrobe.js and vanity.css changed; existing unrelated dirty work and files preserved. No dependency installation, image editing, service restart or VPS release.
