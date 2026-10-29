@@ -1,7 +1,8 @@
 "use strict";
 // Run the existing game rules once inside the caller's database transaction.
 const Room = require("./living-room-state.js");
-const allowed = new Set(["observe", "move", "come", "sit", "stand", "face", "say"]);
+const allowed = new Set(["observe", "move", "come", "sit", "stand", "face", "say",
+  "read_aloud", "invite_read", "accept_read", "decline_read", "read_line", "end_read"]);
 
 function restore(data) {
   const room = new Room();
@@ -9,7 +10,11 @@ function restore(data) {
   for (const field of ["actors", "revision", "following", "invitation", "requests", "events"]) {
     if (data[field] !== undefined) room[field] = data[field];
   }
-  for (const id of ["yan", "yu"]) room.speeches[id].current = data.speeches?.[id] || null;
+  for (const id of ["yueyue", "yan", "yu"]) room.speeches[id].current = data.speeches?.[id] || null;
+  if (data.reading) {
+    room.reading.session = data.reading.session;
+    room.reading.invitation = data.reading.invitation;
+  }
   return room;
 }
 
@@ -35,6 +40,10 @@ function execute(input) {
       case "invite": room.inviteFromUser(command.kind); result = { ok: true }; break;
       case "respond": result = room.respond(command.requestId, command.accepted === true, now); break;
       case "stop_follow": room.stopFollow(); result = { ok: true }; break;
+      case "reading_start": result = room.reading.userStart(command.mode, command.selected, now); break;
+      case "reading_respond": result = room.reading.respond("yueyue", command.requestId, command.accepted === true, now); break;
+      case "reading_line": result = room.reading.line(room.reading.session?.reader, command.text, now); break;
+      case "reading_end": room.reading.end(); result = { ok: true }; break;
       case "close_speech": room.speeches[actor]?.clear(); room.revision++; result = { ok: true }; break;
       default: result = room.command(command, now, actor); break;
     }
@@ -45,7 +54,8 @@ function execute(input) {
   const state = {
     actors: room.actors, revision: room.revision, following: room.following,
     invitation: room.invitation, requests: room.requests, events: room.events,
-    speeches: Object.fromEntries(Object.entries(room.speeches).map(([id, speech]) => [id, speech.snapshot()]))
+    speeches: Object.fromEntries(Object.entries(room.speeches).map(([id, speech]) => [id, speech.snapshot()])),
+    reading: room.reading.snapshot()
   };
   return { ...result, state: room.snapshot(), transport: state, updatedAt: now };
 }
