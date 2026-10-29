@@ -298,3 +298,8 @@ User refined the scale to a small height difference rather than 90%. Yueyue stan
 
 ## 2026-10-30T03:46:55+09:00 Explicit 10% height difference correction
 Yueyue explicitly confirmed the intended difference is 10%. The previous 5% figure was the assistant's inference, not a user-requested change. Only the ordinary Yueyue scene width changes from 17.25% to 16.34%, giving about 90% of Yan's visible height (the original bridal art retains its small height difference). Six outfits, both rooms, three widths, refresh and special-pose exclusion passed 39 focused browser checks with zero exceptions. Existing mirror/card sizes, source art, positions and unrelated dirty work retained; no VPS deployment.
+
+
+## 2026-10-30T04:10:47+09:00 PlayTogether VPS sync
+
+已按月月本轮部署请求发布已提交书柜、卧室三人走动/休息、三人衣柜/Add a look及10%身高修正；游戏源dc7c808、共享适配2bb1d1c，原HTTPS /home/playtogether/入口不变。35差异文件宿主/两容器hash一致，10容器启动配置/原人物状态保持，0重启/安装/删除/模型调用。书柜沿原SQLite共享并保留邀请身份；卧室及衣柜继续设备本地存档，用户导入图不自动上传或跨设备迁移，旧双人呼呼/轮廓草稿未发布。41项Node及61项双页面/三尺寸浏览器检查通过、0页面异常/截图已看；实际健康200，隔离受保护页200/33资产字节一致、私有路径404，公网匿名3资源401；真人登录页和Safari实机未验。精确回退/srv/continuum/workspaces/.local/playtogether-sync-20261030/before.tar.gz，回执D:/mydsproject/.tmp/playtogether-sync-20261030；原dirty保持，不称全树clean。

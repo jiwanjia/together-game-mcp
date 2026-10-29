@@ -8,3 +8,8 @@
 - 先验证规则与共享书柜状态恢复/邀请身份/双客户端/卧室路由；浏览器1280/390/320原页面及衣柜六套/卧室三人功能。再部署，核对宿主/两容器字节、受保护路由200/匿名401/私有路径404、原人物状态及10容器启动配置保持。正式房间不写验收动作，不请求模型。
 - 原完成项的浏览器本地存储语义保持；Add a look不自动迁移本机私人素材到公网，不声称卧室或衣柜已跨设备共享。
 - 精确提交并非强制push游戏main与HOME windows-current；共享适配文件按VPS vps-current正常同步提交push。只追加实际部署状态到原PROJECT_PLAN、HOME_MAP、todo、四段DEVLOG及docs/playtogether-home.md，检查FILE_INDEX/PROJECT_MAP实际变化。保留原dirty，不宣称全树clean。
+
+
+## 2026-10-30T04:10:47+09:00 PlayTogether VPS sync
+
+已按月月本轮部署请求发布已提交书柜、卧室三人走动/休息、三人衣柜/Add a look及10%身高修正；游戏源dc7c808、共享适配2bb1d1c，原HTTPS /home/playtogether/入口不变。35差异文件宿主/两容器hash一致，10容器启动配置/原人物状态保持，0重启/安装/删除/模型调用。书柜沿原SQLite共享并保留邀请身份；卧室及衣柜继续设备本地存档，用户导入图不自动上传或跨设备迁移，旧双人呼呼/轮廓草稿未发布。41项Node及61项双页面/三尺寸浏览器检查通过、0页面异常/截图已看；实际健康200，隔离受保护页200/33资产字节一致、私有路径404，公网匿名3资源401；真人登录页和Safari实机未验。精确回退/srv/continuum/workspaces/.local/playtogether-sync-20261030/before.tar.gz，回执D:/mydsproject/.tmp/playtogether-sync-20261030；原dirty保持，不称全树clean。
