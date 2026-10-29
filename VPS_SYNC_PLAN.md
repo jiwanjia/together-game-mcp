@@ -20,3 +20,7 @@
 ## 2026-10-30T04:10:47+09:00 PlayTogether VPS sync
 
 已按月月本轮部署请求发布已提交书柜、卧室三人走动/休息、三人衣柜/Add a look及10%身高修正；游戏源dc7c808、共享适配2bb1d1c，原HTTPS /home/playtogether/入口不变。35差异文件宿主/两容器hash一致，10容器启动配置/原人物状态保持，0重启/安装/删除/模型调用。书柜沿原SQLite共享并保留邀请身份；卧室及衣柜继续设备本地存档，用户导入图不自动上传或跨设备迁移，旧双人呼呼/轮廓草稿未发布。41项Node及61项双页面/三尺寸浏览器检查通过、0页面异常/截图已看；实际健康200，隔离受保护页200/33资产字节一致、私有路径404，公网匿名3资源401；真人登录页和Safari实机未验。精确回退/srv/continuum/workspaces/.local/playtogether-sync-20261030/before.tar.gz，回执D:/mydsproject/.tmp/playtogether-sync-20261030；原dirty保持，不称全树clean。
+
+
+## 2026-10-30T04:22:24+09:00 Bedroom invitation release correction
+月月指出双人邀请已有实现；此前依据旧验收/未提交记录将它排除，并说成未完成，是发布判断遗漏。已重新核验现成实现：53项Node、92项三尺寸浏览器检查通过、0页面异常，Yan/Yu独立等待/接受/婉拒、旧请求保护/刷新清除、双人原图/旁观者、三人休息/衣柜均通过，截图已看。游戏main@c6cdb5f已push，VPS补发7个真实差异文件，Yan原双人图hash一致复用；宿主/两容器hash一致、原10容器与人物状态保持、0重启/安装/删除/模型请求。受保护页/7资产200、匿名401/私有路径404、实际健康200通过。卧室仍原单页状态；当前聊天Hub MCP尚不能接收手机卧室邀请，不把这次补发称为共享卧室后端。回退/srv/continuum/workspaces/.local/playtogether-pair-20261030/before.tar.gz，回执.tmp/playtogether-sync-20261030/pair-*。无关轮廓/布局/旧文档和私人参考原位保留。
