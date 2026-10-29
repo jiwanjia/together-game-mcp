@@ -274,3 +274,14 @@ together-game-mcp/
 ## 2026-10-29 Original seated trio
 
 三人沙发改为一个SVG遮罩读取指定原图的完整三人，取消旧双人PNG拼接；仅等比显示，原图/脸/牵手不重绘，背景/占座/存档不改。3项既有规则和40项1280/390/320浏览器检查通过，截图已看，0页面异常。VPS仅同步sofa-seated-trio.js，3份文件hash一致、隔离认证路由200/匿名401；10容器与原人物状态保持，0重启。真实Safari/真人登录页未验。
+
+
+## 2026-10-30T03:23:52+09:00 Three wardrobes and illustrated vanity
+- Yueyue/Yan/Yu have independent presets, custom PNG collections and current looks. Add a look previews a local PNG and name, then saves only on explicit confirmation; Cancel/role switch/leaving stores nothing. Six Yueyue presets and both companions' default art are kept.
+- Normal pages keep original PNG Blobs and choices in IndexedDB; old wardrobe-v1 is read without deletion or overwrite. Preview choices/images remain isolated in sessionStorage and have a smaller browser quota. Only PNG up to 4 MiB / 4096px per edge; malformed/empty/oversized images and storage failures leave saved data intact.
+- Transparent handpainted mirror overlay replaces the CSS-only frame. Hearts, little stars and floral symbols remain. Existing character art, shared reading/rest pictures and movement permissions stay unchanged; only custom standing art follows the original scene positions.
+- 83 browser checks passed (51 main/three sizes, 20 normal IndexedDB/failure recovery, 12 corrupt-record/keyboard/cancel), zero page exceptions. 54 existing related Node checks passed. 1280/390/320 screenshots reviewed; true Safari remains untested. A first preview run reached sessionStorage quota with two large PNGs; the protection held and normal IndexedDB accepted three large PNGs. A fixture alpha boundary was corrected to the actual rasterized ellipse edge, with no production change for that assertion.
+- Only wardrobe modules/assets/navigation are selected for Git. Existing pair-rest, room clipping/layout changes, private references and unrelated dirty files remain. This is local front-end delivery, not VPS publishing or shared-room wardrobe synchronization. Active scope: BEDROOM_PAIR_PLAN.md, 2026-10-30 section.
+
+
+2026-10-30T03:26:10+09:00 Exact staged candidate: 10 additional browser checks passed using the staged index and original bedroom/layout files, proving the wardrobe entry works without unfinished pair-rest modules. Total browser checks 93, related Node checks 54; zero candidate page exceptions. CLI route.fetch could not reach the loopback service although its original listener was alive; fetching the same static candidate files through browser fetch and fulfilling them in the isolated test resolved the test-tool path only, without service changes.
